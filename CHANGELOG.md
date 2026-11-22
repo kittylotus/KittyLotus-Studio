@@ -1,3 +1,10 @@
+## v0.17.0 · Native skin names + one-surface mobile editor (2026-11-22)
+
+- Overview eyebrow now reads **The screen's control panel**, with **Prep the scene, Teammate.** as the main heading, without gradient-highlighted typography.
+- Skin Lab has an editable current skin name next to its Save action. Saving validates and synchronizes the native regex name, label metadata, and CSS in both mirrors. Individual exports include that name and the latest CSS; import and export are paired in the visible toolbar, with persistent error feedback.
+- Phones show the live Motive Ledger as the primary surface. A slide-in side drawer holds the palette, geometry, sliders, and skin management. The preview picker closes the drawer to let you choose an element, then reopens the relevant controls.
+- Native sources, Gabi art, and original regexes remain unchanged in the bundled snapshots.
+
 ## v0.16.0 · GitHub Pages release candidate (2026-11-22)
 
 - Mobile-only compact layout: 92% Studio scale at ≤700px, 90% at ≤390px. Desktop remains unchanged.

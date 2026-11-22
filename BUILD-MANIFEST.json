@@ -1,7 +1,7 @@
 {
   "name": "KittyLotus Studio",
-  "version": "0.16.0",
-  "package_type": "full cumulative editable website source + GitHub Pages Actions launch",
+  "version": "0.17.0",
+  "package_type": "full cumulative GitHub Desktop repository-root source overlay",
   "reference": "user-supplied native exports and Gabi-Views art, 2026-11-22",
   "source_repository": "https://github.com/kittylotus/KittyLotus-Multimodal",
   "native_controls": 117,
@@ -10,7 +10,7 @@
   "pinned_contract_fixtures": 8,
   "bundled_expressions": 15,
   "bundled_chibis": 5,
-  "notes": "Five full presentation slots, 19 source-verified variants, 13 focused gallery snapshots. GitHub Pages workflow verifies tests and stages a runtime-only artifact; mobile density reduced on phones without altering native regex output.",
+  "notes": "Named native dossier skins (regex name, metadata skin_label, portable JSON) with validated mirrored source writes and one-surface mobile Skin Lab with a slide-in palette drawer. Homepage typography revised.",
   "sillytavern_prompts": 311,
   "sillytavern_groups": 17,
   "regex_scripts_by_platform": {
@@ -18,8 +18,8 @@
     "sillytavern": 22
   },
   "lounge_art": "assets/gabi/gabi-views.webp (user-supplied full view)",
-  "ux_revision": "Mobile compact 92%/90%, sandbox preview zoom 90% except native CYOA popover. GitHub Pages auto-deploy from main with staged runtime only.",
-  "source_integrity": "Bundled native preset JSON, contract/showcase/cascade fixtures, and every Gabi image byte-identical to v0.15; only site code/tests/docs changed.",
+  "ux_revision": "Mobile preview-first Skin Lab with drawer, preview picker roundtrip and persistent skin import status. Desktop two-column remains unchanged.",
+  "source_integrity": "Original native source JSON, all contract/showcase/cascade fixtures, and bundled Gabi artwork verified byte-identical to v0.16.",
   "reference_style": "docs/constellation-style-reference.html (user-supplied standalone CSS token specification)",
   "showcase_fixtures": 13,
   "showcase_precomputed_html_snapshots": 13,
@@ -32,10 +32,11 @@
     "sillytavern": 3
   },
   "regression_tests": {
-    "node": 77,
-    "mobile_pages_browser": "passed (390px compact, iframe scale, CYOA declarative activation, desktop reset)",
-    "v13_showcase_browser": "full legacy combined test timed out in this environment; previously passed on v0.15",
-    "served_browser": "localhost blocked by sandbox policy"
+    "node": 81,
+    "browser_skin_lab": "passed: downloaded portable skin export, file chooser re-import, mirrored source save, mobile drawer/picker",
+    "mobile_pages_browser": "passed 390px, CYOA and desktop reset",
+    "esm_browser": "passed all 17 ST groups with actual module boundaries",
+    "github_pages_stage": "passed"
   },
   "integrity": {
     "method": "sha256",
@@ -44,8 +45,8 @@
       ".github/workflows/pages.yml": "6180ad751509707a80120871147194c9053b5bb2342ba468591c8187a9aba45f",
       ".gitignore": "62ca8c15f269e9a91014ba0fdb6082642d7d3752dc844e111377bf22bc156b43",
       ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "CHANGELOG.md": "e3111ccff2c42a285ebe45ad9c8d8bdb3eedd5b3d11ae3816e14dd804c644daf",
-      "README.md": "2b6d29421b4df9c55eb1fe8b3fd7eef9840bfdebf31b06293b4b01421f086500",
+      "CHANGELOG.md": "fab320293379cf63ea3e2417f2c85aa43124ab80f2ceeb3e9470eaf242ae4990",
+      "README.md": "dd5da88366a26e1f89b37a395c1e49dc7833e44aa1731ad54248da6763fc09c0",
       "assets/chibis/README.md": "41c81f5d2b6121becd96ff422505dc45bcb97b1bdb29c8a52ea0716cd965c44f",
       "assets/chibis/chibi-gabi-investigate.png": "21bd8e94b6d6111a6367143d85946b760bc00a35cb0902a61e2bd00b2261e551",
       "assets/chibis/chibi-gabi-shh.png": "73eb522b0db2bb8d209e6dcf053a07e5dbb066edc5216b6ac40cf2873a81272e",
@@ -77,6 +78,7 @@
       "css/mobile-compact.css": "2337e0540b9b8acf0429bc44f8dd422e94988fb9315ad1434915c5557b4c1e75",
       "css/nightshift.css": "5b9e7ac7026e3904f7f66bf649874f6f4ec4cfc63ba6b51fa75e4ad10f577635",
       "css/regex-showcase.css": "ee2cce93753db7017cbddc66e6a0ecb49d46fab0f887b6044af22431d77b45d9",
+      "css/skinlab-v017.css": "1fc72e406a4f0427c6df8ada9acb7f5eea420c78ea3c93fd0df19633969f7283",
       "css/skinmaker-v08.css": "7fe4783925ea829a17801804b01bc13667ba450f0bce9f71a5857d6f22877e3e",
       "css/skinmaker-v09.css": "a5d283b835ed702ed11d6f9bdf50f67c1aa3092281b30fff17acf598f222fb4f",
       "css/studio.css": "104eb3c67a8331f12cead6b9a3732f5dd6b80a7b25e12f2c9c09350b2753713c",
@@ -93,8 +95,8 @@
       "data/native/sillytavern.json": "cc6359e32b793f96641df83fb410d953508865cf34b2e8d9db4d91b29f1faf18",
       "data/native/source-manifest.json": "4af2ca6bb4b30c2c836a56d8454b70df390f018fe25fe32540a3bb0761b1dc83",
       "docs/constellation-style-reference.html": "e1dc9d3da1f94a4640b988c19be9fd2fef48891d3be8a7616bc641d7f5a359e3",
-      "index.html": "2e43be42997bb4c50cf91373dba83227835ea6503947aedcaf0e2c68d0bfc5a0",
-      "js/app.js": "952cbb009c57b6de2ebafbfb8326b2e3c43dbcf63e797e6757151844291b3514",
+      "index.html": "e0eecfbff52a2cba8acab7fbf79ed01fd4a1dfdca5ba9fe4413357f4adbdf1b2",
+      "js/app.js": "1201e578140fe2307562880686655f0e90f94bbac1433420a6c494e4c70d9b53",
       "js/cascade-showcase.js": "6ee64e3557d3ed3dcc1e51d582574d352a4dac2999725bfff7e754dd41d15bdb",
       "js/cascade.js": "b7b343cf2d925269a12dca4837f5b9af8ff9746c1c011dc352be12b629d3de60",
       "js/catalog.js": "35ea100dca1b2771d4f2a894f29ab41db12d080270400ab1c61c8af15f1ccf99",
@@ -104,19 +106,19 @@
       "js/showcase-ui.js": "21dfd7011d1755d3f10e80aaa27284210b92269018de5de5b50640ef88c8073f",
       "js/showcase.js": "2e8c1ded2a730cebb7ea786e603edbf05be502565ad915598530fa60536e5159",
       "js/skin-controls.js": "6ee3d7beebf2d7e624878f50a4fcb8b23975c9b8e7441a49976f2a57519faeaf",
-      "js/workbench.js": "8164aade1cc04a76a51922745f1c2a7f59373f4c1caae56a176e9b313b7136fe",
-      "package.json": "484df8007acc9e7098094c3bdd6a0d776111fcf07dbf52b761fae177d6f90fc4",
-      "scripts/stage-pages.mjs": "3f96bd4a6a53610ace426d9c0193515e277f56b313e710ac79c96edc8389a05e",
+      "js/workbench.js": "448bfb61e94a330dff77fcb9c616f925dcb1b8f893f3e32ee0b5cadc7ad5a12b",
+      "package.json": "078bc8228081cbc2ae4bf31084f956b7f199877b36711d6b2c828efe1befc211",
+      "scripts/stage-pages.mjs": "732cd225d2692921ee036ffae393ace681f15bb0332256d22fc1eae47815dfa9",
       "start-studio.cmd": "98142f1730e4f1d17b68a747ff1da257a39755622f98f9fd06986467068a685a",
       "tests/browser_smoke.py": "a58bc2cd16e535128488163e617a7d39daff21ec44e1cbc722aec10e7adc8039",
       "tests/cascade.test.mjs": "3a303343af23c0990bf2de0ec5f954e31f07b0e303d19f3ffd6c5af109192e2d",
       "tests/core.test.mjs": "bee213b22401f762398f3f810f1755f00da37efd1361b92f7d56384a50d77893",
-      "tests/esm-boundary.test.mjs": "eb456e69627017818372df0126627a15f9d02a5361faed308a6b4a10edc6478f",
-      "tests/esm_browser_smoke.py": "c4f7ec4d1b9d8eb93ce26d19bacf772912ab55f73842cb8b64b118726545a186",
-      "tests/mobile_pages_browser_smoke.py": "d5e66f9794e251836ad598d1e2b4a8a5412e3717f3da1cae4887ed3ce223ac9e",
+      "tests/esm-boundary.test.mjs": "34e3457655bbcab52d28b8bceba84c2100033dc14ba9dba4753c5deb5be34f84",
+      "tests/esm_browser_smoke.py": "00f083aa9ff0d8895be6f7b587625d6f91201894dbd7f22db5885e003fb8b625",
+      "tests/mobile_pages_browser_smoke.py": "1c67e469d0b1b134ee19eab36bf0b268275f3cc241676362f3162c828b83d639",
       "tests/native.test.mjs": "d4e093e08b89e2765b5c8483789b1a1caf792d345154680819c523728cc303cc",
-      "tests/native_browser_smoke.py": "c941ad622d84ff6051f28d0c6169a048c183e15299daabc144f9659e3d6bcd36",
-      "tests/pages.test.mjs": "5d294dcd1b4857b0046d221f8abfb4f0de6bfb7a5e40c421657a32e0237db8bf",
+      "tests/native_browser_smoke.py": "eeb3bf143151c4a66b06ee099c7b671218683c2376d88307fade7267416a80ac",
+      "tests/pages.test.mjs": "f5212032a9b9640cbc19c488fdae627415f66c83f4143b9910b87db52d37630a",
       "tests/served_browser_smoke.py": "7098068a43f734b393462144ce7afa2ceebfe577e7f6e67bf8d2ab9867ea5834",
       "tests/showcase.test.mjs": "3f886d6ffd6ab239c618fd7b909b9f8fb148d7f88e79cff4e97331a4fecd36fe",
       "tests/showcase_browser_smoke.py": "03f166a30f051e36af1696677ea5f88186211245a125a7f35c924025ebaa7b73",
@@ -126,9 +128,11 @@
       "tests/st_outline_browser_smoke.py": "14f913d21c0c871ddb640a7c3d7c94381741703d3c2d46b8dec2b6e12714b06b",
       "tests/static.test.mjs": "bf33726503a5bca93970773337634bd46eac03224916a89586ee637ac1f3e571",
       "tests/ux-workbench.test.mjs": "30bc3b81c66633955499dac533b51f6b0b6ed9b4d78e363885e28a570de04392",
-      "tests/v10.test.mjs": "39b06aef69307413962bdfb8e9919347ad6adf7625eb922b22d795b7d92fa715",
+      "tests/v10.test.mjs": "6d1c0c5afc50f087b10acf0ccb164e9c6e14c2a7054f5e2c0b1a65bc0a0f2d0f",
       "tests/v10_browser_smoke.py": "eea99396535b404d469aa852f745fb562cc4616769aceed59287439508523de1",
-      "tests/v13_showcase_browser_smoke.py": "78a3d567ec97561a0299cd8574c9a38409cf751900052bb0f0350142a4b20ef6",
+      "tests/v13_showcase_browser_smoke.py": "aa6d30e066b7a48df2c01ea180601969c5f566e162775e6f676698866830e69f",
+      "tests/v17_skin.test.mjs": "1a67a47d8accf4e65a12545ace067cfa78c10349164f267ca0266f984efd94c9",
+      "tests/v17_skin_browser_smoke.py": "85560eab5ecab9932649a36a548a37a1f5c16d4548fc0cfbe59d4e544c7f946f",
       "tests/workbench.test.mjs": "b6ec1acc8b77a3d59779063b0f132e5c6306633d53004f7a7d97357a53e0eafd",
       "tests/workbench_browser_smoke.py": "0d2495678b3d8568c9958b75f6ff367e3dfcd935d267c2596bc59f8a8309cc70"
     }
@@ -162,6 +166,6 @@
       "assets/"
     ],
     "repository_base": "relative paths, works under /REPOSITORY/",
-    "deployment_status": "not deployed; repository and GitHub Pages settings must be configured by user"
+    "deployment_status": "manual GitHub Desktop overlay; public URL https://kittylotus.github.io/KittyLotus-Studio/ (existing user deployment), redeploy not performed"
   }
 }

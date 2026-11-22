@@ -4,14 +4,14 @@ from shutil import which
 from base64 import b64encode
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
-CSS=['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css','mobile-compact.css']
+CSS=['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css','mobile-compact.css','skinlab-v017.css']
 MODULES=['native.js','core.js','catalog.js','skin-controls.js','workbench.js','showcase.js','showcase-ui.js','cascade.js','cascade-showcase.js','app.js']
 FILES=['data/native/lumiverse.json','data/native/sillytavern.json','data/native/janitor-reserved-agency.txt','data/native/janitor-impersonation.txt','data/fixtures/contract-fixtures.json','data/fixtures/showcase-samples.json','data/fixtures/showcase-snapshots.json','data/fixtures/cascade-samples.json']
 
 def run():
  html=(ROOT/'index.html').read_text(encoding='utf-8')
  for name in CSS:html=html.replace(f'<link href="./css/{name}" rel="stylesheet"/>','')
- html=html.replace('<script src="./js/app.js?v=0.16.0" type="module"></script>','')
+ html=html.replace('<script src="./js/app.js?v=0.17.0" type="module"></script>','')
  html=html.replace('</head>','<style>'+'\n'.join((ROOT/'css'/name).read_text(encoding='utf-8') for name in CSS)+'</style></head>')
  b64=b64encode((ROOT/'assets/gabi/gabi-views.webp').read_bytes()).decode()
  html=html.replace('src="./assets/gabi/gabi-views.webp"',f'src="data:image/webp;base64,{b64}"')
@@ -20,7 +20,7 @@ def run():
  start=app.index('function runRegexInWorker(')
  stop=app.index('async function loadNativeRegex(',start)
  app=app[:start]+'async function runRegexInWorker(input,scripts,options){return transformRegex(input,scripts,options);}\n'+app[stop:]
- sources['app.js']=app.replace('?v=0.16.0','')
+ sources['app.js']=app.replace('?v=0.17.0','')
  fixtures={name:(ROOT/name).read_text(encoding='utf-8') for name in FILES}
  with sync_playwright() as p:
   browser=p.chromium.launch(headless=True,executable_path=which('chromium') or which('google-chrome') or None,args=['--no-sandbox'])

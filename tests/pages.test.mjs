@@ -7,8 +7,9 @@ const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const get=f=>readFileSync(resolve(root,f),'utf8');
 test('GitHub Pages root works from a project subpath',()=>{
  const html=get('index.html');
- assert.match(html,/src="\.\/js\/app\.js\?v=0\.16\.0"/);
+ assert.match(html,/src="\.\/js\/app\.js\?v=0\.17\.0"/);
  assert.match(html,/href="\.\/css\/mobile-compact\.css"/);
+ assert.match(html,/href="\.\/css\/skinlab-v017\.css"/);
  assert.doesNotMatch(html,/(?:src|href)=["']\/(?!\/)/);
  for(const [,local] of html.matchAll(/(?:src|href)=["'](\.\/[^"']+)["']/g))
   assert.ok(existsSync(resolve(root,local.split(/[?#]/)[0])),`Missing ${local}`);

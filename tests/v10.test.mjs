@@ -14,7 +14,9 @@ test('individual dossier export retains exactly the real regex record and the la
  assert.ok(skin);
  const edit=skin.replaceString.replace('--rxd-bg:', '--rxd-bg: /* test */');
  const portable=individualDossierSkin(source,skin.id,edit);
- assert.deepEqual(Object.keys(portable),['kind','version','platform','regex_script']);
+ assert.deepEqual(Object.keys(portable),['kind','version','platform','skin_name','regex_script']);
+ assert.equal(portable.skin_name,'Default Purple');
+ assert.equal(portable.regex_script.metadata.skin_label,'Default Purple');
  assert.equal(portable.regex_script.name,skin.meta.name);
  assert.equal(portable.regex_script.replace_string,edit);
  assert.equal(portable.regex_script.find_regex,skin.meta.find_regex);

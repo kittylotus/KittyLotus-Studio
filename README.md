@@ -1,4 +1,4 @@
-# KittyLotus Studio v0.15 · Interactive CYOA Dock & SVG Routes
+# KittyLotus Studio v0.17 · Skin Lab Drawer & Named Native Skins
 
 KittyLotus Studio is a browser-local, no-build narrative preset workbench. It runs as static HTML/CSS/JavaScript and can be published to GitHub Pages. The provided Lumiverse, SillyTavern and Janitor sources are bundled in `data/native/`, with no cloud account or automatic upload.
 
@@ -33,6 +33,10 @@ The lower curated gallery focuses on the supplied **Gabrielle, Kitty, and Zephyr
 Two Gabi display fixtures have Lumiverse host-variable gating macros that do not execute in a standalone browser. **Only their browser preview** isolates the already-generated UI island so the author can see the result; the source regex, native JSON, fixture packets, and snapshot outputs are not rewritten. The standalone CYOA preview now keeps its original dock and interactive declarative popover, while host submission remains disabled. Scripts and host-only actions remain disabled in the sandbox. The single-regex sample picker now jumps without a long smooth-scroll animation.
 
 Run `npm test` for source checks, and `python tests/v13_showcase_browser_smoke.py` for the real separated-ESM Chromium gallery test (requires Python Playwright and Chromium). The older `tests/showcase_browser_smoke.py` command now invokes the same updated test.
+
+## v0.17 interaction notes
+
+In **Skin Lab**, the current skin's name is editable above Save. Save commits the name and CSS to both native Lumiverse regex mirrors. **Export skin** creates a portable Studio skin JSON whose `skin_name`, `regex_script.name`, and `metadata.skin_label` agree; **Import skin** sits beside it and creates an individually identified, disabled variant in both mirrors. Export the full native preset separately when you want those in-memory edits in Lumiverse JSON. On phones, the renderer stays visible and the **Skin controls** drawer slides in; **Pick element** lets you select an element before opening its controls.
 
 ## What's included
 

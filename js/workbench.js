@@ -1,5 +1,5 @@
 /** Source-preserving editors shared by Studio workspaces. Native identities are never guessed. */
-import {detectNativeFormat,getActualRegexScripts} from './native.js';
+import {detectNativeFormat,getActualRegexScripts,dossierSkins} from './native.js';
 import {compileSourceRegex} from './core.js';
 
 export const cleanHeading = name => String(name || 'Untitled').replace(/[≽≼✧━┌┆╰─✦★⩊•❛❜ू﹝﹞ྀིૢ]/g,'').replace(/\s+/g,' ').trim() || 'Untitled';
@@ -142,15 +142,50 @@ export function addCustomDossierSkin(source,baseId,title){
  }
  return id;
 }
+/** Canonical user-facing name. Every exported/native identity uses this single label. */
+export function dossierSkinLabel(value){
+ if(typeof value!=='string')throw Error('Skin name must be text.');
+ const label=value.normalize('NFC').trim();
+ if(!label||label.length>72||/[\x00-\x1F\x7F]/.test(label))throw Error('Choose a skin name from 1 to 72 visible characters.');
+ return label;
+}
+const skinRegexName=(label)=>`🎨 [Regex Skins] ${label}`;
+/** Save name and CSS together, after both source mirrors have been validated. */
+export function saveDossierSkin(source,id,label,css){
+ if(detectNativeFormat(source)!=='lumi')throw Error('Load a native Lumiverse preset first.');
+ const chosen=dossierSkins(source).find(s=>s.id===id);
+ if(!chosen)throw Error('Selected dossier skin is missing.');
+ const title=dossierSkinLabel(label),name=skinRegexName(title),value=cssSafeForStyle(css);
+ const arrays=[source.regex_scripts,source.extensions?.regex_scripts];
+ if(arrays.some(arr=>!Array.isArray(arr)))throw Error('One native skin mirror is missing.');
+ const rows=[];
+ for(const array of arrays){
+  const matches=String(id).startsWith('lumi-regex-')?[array[chosen.index]].filter(Boolean):array.filter(row=>String(row.script_id??row.id)===String(id));
+  if(matches.length!==1||matches[0].name!==chosen.scriptName||!String(matches[0].find_regex||'').includes('RX_DOSSIER_SKIN'))throw Error('Skin mirror identity mismatch. No changes were written.');
+  if(array.some(row=>row!==matches[0]&&row.name===name))throw Error('A skin with that name already exists.');
+  if(matches[0].metadata!=null&&(typeof matches[0].metadata!=='object'||Array.isArray(matches[0].metadata)))throw Error('Invalid native skin metadata.');
+  rows.push(matches[0]);
+ }
+ let changed=0;
+ for(const row of rows){
+  if(row.name!==name){row.name=name;changed++;}
+  if(row.replace_string!==value){row.replace_string=value;changed++;}
+  if(row.metadata?.skin_label!==title){row.metadata={...(row.metadata||{}),skin_label:title};changed++;}
+ }
+ return changed;
+}
 /** Portable one-skin JSON. The original Lumiverse regex record is retained intact. */
-export function individualDossierSkin(source,id,css){
+export function individualDossierSkin(source,id,css,label){
  if(detectNativeFormat(source)!=='lumi')throw new Error('Only Lumiverse has native dossier skins.');
  const matching=getActualRegexScripts(source).filter(script=>script.id===id&&/RX_DOSSIER_SKIN/.test(script.findRegex));
  if(matching.length!==1)throw new Error('Selected native dossier skin is missing or ambiguous.');
  const script=matching[0];
+ const title=dossierSkinLabel(label??(script.meta.metadata?.skin_label||script.scriptName.replace(/^.*?\]\s*/,'')));
  const value=cssSafeForStyle(css===undefined?script.replaceString:css);
- // One exact native regex script, not a truncated entire preset or a synthetic CSS-only stub.
- return {kind:'kittylotus-dossier-skin',version:1,platform:'lumiverse',regex_script:{...structuredClone(script.meta),replace_string:value,disabled:false}};
+ const record={...structuredClone(script.meta),name:skinRegexName(title),replace_string:value,disabled:false};
+ record.metadata={...(record.metadata||{}),skin_label:title};
+ // ID is regenerated on import; no other regex fields, find pattern or execution placement change.
+ return {kind:'kittylotus-dossier-skin',version:1,platform:'lumiverse',skin_name:title,regex_script:record};
 }
 /** Import the same portable file without losing other native entries or desynchronizing mirrors. */
 export function importIndividualDossierSkin(source,portable){
@@ -161,15 +196,17 @@ export function importIndividualDossierSkin(source,portable){
  cssSafeForStyle(script.replace_string);
  const arrays=[source.regex_scripts,source.extensions?.regex_scripts];
  if(arrays.some(arr=>!Array.isArray(arr)))throw new Error('Native regex mirrors are missing.');
- const name=String(script.name||'').trim();
- if(!name||!/Regex Skins|Dossier Skin/i.test(name))throw new Error('Portable script is not a dossier skin.');
+ const sourceName=String(script.name||'').trim();
+ if(!sourceName||!/Regex Skins|Dossier Skin/i.test(sourceName))throw new Error('Portable script is not a dossier skin.');
+ const title=dossierSkinLabel(portable.skin_name??sourceName.replace(/^.*?\]\s*/,''));
  const existing=new Set(arrays.flatMap(arr=>arr.map(row=>row.name)));
- let uniqueName=name,counter=1;
- while(existing.has(uniqueName)){uniqueName=name.replace(/\s*\(Imported(?: \d+)?\)$/,'')+` (Imported${counter>1?' '+counter:''})`;counter++;}
+ let chosen=title,counter=1;
+ while(existing.has(skinRegexName(chosen))){chosen=`${title.slice(0,60)} (Imported${counter>1?' '+counter:''})`;counter++;}
+ const uniqueName=skinRegexName(chosen);
  compileSourceRegex(script.find_regex,script.flags||'g');
  const id=globalThis.crypto?.randomUUID?.()||'imported-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
  const index=Math.max(...arrays.flatMap(arr=>arr.map(row=>Number(row.sort_order)||0)),0)+1;
- const record={...structuredClone(script),name:uniqueName,metadata:{...(script.metadata&&typeof script.metadata==='object'?structuredClone(script.metadata):{}),skin_id:id,skin_label:uniqueName.replace(/^.*?\]\s*/, '')},script_id:id,disabled:true,sort_order:index};
+ const record={...structuredClone(script),name:uniqueName,metadata:{...(script.metadata&&typeof script.metadata==='object'?structuredClone(script.metadata):{}),skin_id:id,skin_label:chosen},script_id:id,disabled:true,sort_order:index};
  // Validate both destinations before writing either, then clone identical records into both.
  for(const arr of arrays)arr.push(structuredClone(record));
  return id;

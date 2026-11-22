@@ -1,10 +1,10 @@
 import {REPO,EXTRA_BASE,GABIS,CHIBIS,SKIN_GROUPS,DEFAULT_SKINS,DEFAULT_DEMO_SCRIPTS,MODULES} from './catalog.js';
-import {createShowcase} from './showcase-ui.js?v=0.16.0';
-import {createCascadeShowcase} from './cascade-showcase.js?v=0.16.0';
+import {createShowcase} from './showcase-ui.js?v=0.17.0';
+import {createCascadeShowcase} from './cascade-showcase.js?v=0.17.0';
 import {SOURCE_PATHS,PRESET_REPO,detectNativeFormat,nativeSections,nativeValue,setNativeValue,resolveNativeChoice,resolveNativeMultiChoice,auditFixtureContracts,getActualRegexScripts,dossierSkins,selectDossierSkin,resolveGitHubCandidates,makeNativeFixtureSummary} from './native.js';
 import {PROFILE_FORMAT,PROFILE_SCHEMA,MAX_REGEX_BYTES,parseDocument,serializeDocument,getJsonValue,setJsonValue,convertPrimitive,stripUnsafeFilename,profileValid,filterGitHubTree,encodeGitHubPath,extractRegexScripts,compileSourceRegex} from './core.js';
 import {skinVariableGuide,nativeSkinGroupNames,editableColorParts,replaceEditableColor,editableLength,insertDossierSkinIntoRenderer,MOTIVE_AREAS,nativeTokensForArea,motiveAreaForSelector} from './skin-controls.js';
-import {cleanHeading,sillyTavernSections,stOutlinePresentation,stPresentationLabel,setSillyTavernPrompt,platformRegexGroups,patchNativeRegex,addCustomDossierSkin,individualDossierSkin,importIndividualDossierSkin,trackerPreviewInput,trackerPreviewScripts,cssSafeForStyle,motiveLedgerRenderer,motiveLedgerPreviewInput,hasRenderableReplacement,nativeSkinVariables,updateSkinVariable} from './workbench.js';
+import {cleanHeading,sillyTavernSections,stOutlinePresentation,stPresentationLabel,setSillyTavernPrompt,platformRegexGroups,patchNativeRegex,addCustomDossierSkin,saveDossierSkin,individualDossierSkin,importIndividualDossierSkin,trackerPreviewInput,trackerPreviewScripts,cssSafeForStyle,motiveLedgerRenderer,motiveLedgerPreviewInput,hasRenderableReplacement,nativeSkinVariables,updateSkinVariable} from './workbench.js?v=0.17.0';
 
 const $=(id)=>document.getElementById(id);
 const svgIcon=(name,className='icon')=>{const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('class',className);s.setAttribute('aria-hidden','true');const u=document.createElementNS('http://www.w3.org/2000/svg','use');u.setAttribute('href',`#i-${name}`);s.append(u);return s;};
@@ -433,7 +433,7 @@ function renderDossierVariables(){
  const selected=variants.find(s=>s.id===previous)||variants.find(s=>/Default Purple/.test(s.scriptName))||variants[0];
  state.dossierSkinId=selected?.id||null;select.value=state.dossierSkinId||'';
  if(!selected){$('skinVariantSource').value='';$('skinVariableCount').textContent='No native skins';holder.replaceChildren();return;}
- $('skinVariantSource').value=selected.replaceString;setSkinSaveStatus('Ready to edit · save when finished');$('skinManageName').textContent=selected.scriptName.replace(/^.*?\]\s*/, '');
+ $('skinVariantSource').value=selected.replaceString;setSkinSaveStatus('Ready to edit · save when finished');$('skinManageName').textContent=selected.scriptName.replace(/^.*?\]\s*/, '');$('skinCurrentName').value=selected.scriptName.replace(/^.*?\]\s*/, '');
  const entries=nativeSkinVariables(selected.replaceString);
  $('skinVariableCount').textContent=`${entries.length} native tokens`;
  renderSkinPart();previewDossierSample();queueSkinPreview();
@@ -490,9 +490,10 @@ function armSkinPickerFrame(){
   const area=motiveAreaForSelector(event.target);
   event.preventDefault();event.stopImmediatePropagation();
   state.skinPart=area;state.skinPicking=false;
-  $('skinPartPicker').value=area;$('skinPickPreview').setAttribute('aria-pressed','false');
+  $('skinPartPicker').value=area;for(const id of ['skinPickPreview','skinMobilePick'])$(id).setAttribute('aria-pressed','false');
   renderSkinPart();armSkinPickerFrame();
   // The picker is visible at the top of the independently scrolling operator rail.
+  if(isSkinMobile())openSkinDrawer();
   $('skinPartPicker').focus({preventScroll:true});
   $('skinPartPicker').closest('.skin-part-tools')?.scrollIntoView({block:'nearest',behavior:'instant'});
  };
@@ -549,18 +550,43 @@ async function loadSkinSource(){
  const script=skinRenderer();if(!script)throw new Error('No Motive Ledger HTML renderer in this native snapshot.');
  state.skinRendererId=script.id;state.skinMotiveOverrides=new Map();
  $('skinRendererName').textContent=script.scriptName;$('skinQuickActions').hidden=platform!=='lumi';$('skinLumiOnly').hidden=platform!=='lumi';$('skinApply').hidden=platform!=='lumi';$('skinExportNative').hidden=platform!=='lumi';
- $('skinCreate').hidden=platform!=='lumi';$('skinImportSingle').hidden=platform!=='lumi';$('skinExportSingle').hidden=platform!=='lumi';$('skinMotiveDetails').hidden=platform!=='lumi';
+ $('skinCreate').hidden=platform!=='lumi';$('skinImportSingle').hidden=platform!=='lumi';$('skinExportSingle').hidden=platform!=='lumi';$('skinCurrentNameGroup').hidden=platform!=='lumi';$('skinMotiveDetails').hidden=platform!=='lumi';
+ if(platform!=='lumi')closeSkinDrawer();
  $('skinInput').value=motiveLedgerPreviewInput();
  if(platform==='lumi'){renderDossierVariables();renderMotiveVariables();}
  $('skinStatus').textContent=`${platform==='st'?'SillyTavern':'Lumiverse'} · original Motive Ledger renderer`;
  queueSkinPreview();
 }
+const isSkinMobile=()=>window.matchMedia('(max-width:700px)').matches;
+function syncSkinDrawer(){
+ const open=!!state.skinDrawerOpen&&isSkinMobile();
+ $('skinOperator').classList.toggle('is-drawer-open',open);
+ $('skinOperator').inert=isSkinMobile()&&!open;
+ $('skinDrawerBackdrop').hidden=!open;
+ $('skinOpenControls').setAttribute('aria-expanded',String(open));
+ document.body.classList.toggle('skin-drawer-open',open);
+}
+function openSkinDrawer(){if(!isSkinMobile())return;state.skinDrawerOpen=true;syncSkinDrawer();$('skinCloseControls').focus({preventScroll:true});}
+function closeSkinDrawer(){const wasOpen=state.skinDrawerOpen;state.skinDrawerOpen=false;syncSkinDrawer();if(wasOpen&&isSkinMobile())$('skinOpenControls').focus({preventScroll:true});}
+function toggleSkinPicker(){
+ state.skinPicking=!state.skinPicking;
+ for(const id of ['skinPickPreview','skinMobilePick'])$(id).setAttribute('aria-pressed',String(state.skinPicking));
+ armSkinPickerFrame();
+ if(state.skinPicking&&isSkinMobile()){closeSkinDrawer();$('skinMobilePick').focus({preventScroll:true});}
+}
+function setSkinImportStatus(message,error=false){const status=$('skinImportStatus');status.textContent=message;status.dataset.error=String(error);status.hidden=false;}
 function wireSkinLab(){
  const partSelect=$('skinPartPicker');
  for(const area of MOTIVE_AREAS){const opt=make('option',{},area.label);opt.value=area.id;partSelect.append(opt);}
  state.skinPart='canvas';state.skinPicking=false;partSelect.value='canvas';
  partSelect.addEventListener('change',()=>{state.skinPart=partSelect.value;renderSkinPart();});
- $('skinPickPreview').addEventListener('click',()=>{state.skinPicking=!state.skinPicking;$('skinPickPreview').setAttribute('aria-pressed',String(state.skinPicking));armSkinPickerFrame();});
+ $('skinPickPreview').addEventListener('click',toggleSkinPicker);
+ $('skinMobilePick').addEventListener('click',toggleSkinPicker);
+ $('skinOpenControls').addEventListener('click',openSkinDrawer);
+ $('skinCloseControls').addEventListener('click',closeSkinDrawer);
+ $('skinDrawerBackdrop').addEventListener('click',closeSkinDrawer);
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&state.skinDrawerOpen){event.preventDefault();closeSkinDrawer();}});
+ window.matchMedia('(max-width:700px)').addEventListener('change',()=>{if(!isSkinMobile())closeSkinDrawer();else syncSkinDrawer();});
  $('skinQuickSave').addEventListener('click',()=>{const rail=document.querySelector('.skin-operator'),position=rail.scrollTop;$('skinSaveVariant').click();rail.scrollTop=position;requestAnimationFrame(()=>{if(state.view==='skins')rail.scrollTop=position;});});
  $('skinQuickActivate').addEventListener('click',()=>$('skinActivate').click());
  $('skinFrame').addEventListener('load',()=>{if($('skinFrame').contentDocument?.querySelector('.rxd-motive'))applySkinStylesWithoutReload();armSkinPickerFrame();});
@@ -573,7 +599,7 @@ function wireSkinLab(){
  for(const b of document.querySelectorAll('[data-skin-device]'))b.addEventListener('click',()=>{$('skinFrameWrap').classList.toggle('device-mobile',b.dataset.skinDevice==='mobile');document.querySelectorAll('[data-skin-device]').forEach(node=>node.classList.toggle('active',node===b));});
  $('skinExportCss').addEventListener('click',()=>{try{const skin=state.skinPlatform==='lumi'?cssSafeForStyle($('skinVariantSource').value):'';const css=(skin?`.rxd-motive {\n${skin}\n}\n`:'')+compiledSkinCSS();download('kittylotus-motive-preview.css',css,'text/css');toast('Selected dossier palette and Motive CSS exported.');}catch(e){toast(e.message,true);}});
  $('skinExportNative').addEventListener('click',()=>{if(detectNativeFormat(nativeSkinSource())!=='lumi')return toast('Load a Lumiverse source first.',true);$('exportSourceButton').click();});
- $('skinExportSingle').addEventListener('click',()=>{try{const skin=individualDossierSkin(nativeSkinSource(),state.dossierSkinId,$('skinVariantSource').value);const base=skin.regex_script.metadata?.skin_label||skin.regex_script.name||'custom-dossier';download(`${base}-skin.json`,JSON.stringify(skin,null,2));toast('Individual native dossier skin exported, including unsaved CSS edits.');}catch(e){toast(e.message,true);}});
+ $('skinExportSingle').addEventListener('click',()=>{try{const skin=individualDossierSkin(nativeSkinSource(),state.dossierSkinId,$('skinVariantSource').value,$('skinCurrentName').value);download(`${skin.skin_name}-skin.json`,JSON.stringify(skin,null,2));setSkinSaveStatus(`Exported ${skin.skin_name} · ready to import`);toast('Exported a named skin with matching native regex metadata and current CSS.');}catch(e){setSkinSaveStatus(e.message);toast(e.message,true);}});
  $('skinApply').addEventListener('click',()=>{
   const source=nativeSkinSource();if(detectNativeFormat(source)!=='lumi')return toast('Only Lumiverse exposes native skin creation here.',true);
   try{const css=compiledSkinCSS(),script=skinRenderer();if(!css.trim())return toast('No CSS override to write.');
@@ -583,28 +609,29 @@ function wireSkinLab(){
    skinMarkDirty(edits);toast(edits?'Motive overrides saved into both Lumiverse regex mirrors. Export your JSON.':'Motive overrides are unchanged.');queueSkinPreview();
   }catch(e){toast(e.message,true);}
  });
- $('skinBase').addEventListener('change',()=>{const previous=dossierSkins(nativeSkinSource()).find(s=>s.id===state.dossierSkinId);if(previous&&previous.replaceString!==$('skinVariantSource').value){$('skinBase').value=state.dossierSkinId;return toast('Unsaved skin CSS. Save this skin before switching to another.',true);}state.dossierSkinId=$('skinBase').value;renderDossierVariables();});
- $('skinActivate').addEventListener('click',()=>{const source=nativeSkinSource(),skin=dossierSkins(source).find(s=>s.id===state.dossierSkinId);if(!skin)return toast('Choose a native Lumiverse skin.',true);if(skin.replaceString!==$('skinVariantSource').value)return toast('Save these CSS edits before activating the skin.',true);try{const changed=selectDossierSkin(source,skin.id);skinMarkDirty(changed);setSkinSaveStatus(changed?'Active in native preset · export JSON':'Already active · export JSON to keep changes');toast(changed?'Selected this skin in the native preset. Export JSON to keep it.':'This skin is already active.');}catch(e){toast(e.message,true);}});
+ $('skinBase').addEventListener('change',()=>{const previous=dossierSkins(nativeSkinSource()).find(s=>s.id===state.dossierSkinId);if(previous&&(previous.replaceString!==$('skinVariantSource').value||(previous.scriptName.replace(/^.*?\]\s*/,''))!==$('skinCurrentName').value.trim())){$('skinBase').value=state.dossierSkinId;return toast('Unsaved skin CSS. Save this skin before switching to another.',true);}state.dossierSkinId=$('skinBase').value;renderDossierVariables();});
+ $('skinActivate').addEventListener('click',()=>{const source=nativeSkinSource(),skin=dossierSkins(source).find(s=>s.id===state.dossierSkinId);if(!skin)return toast('Choose a native Lumiverse skin.',true);if(skin.replaceString!==$('skinVariantSource').value||(skin.scriptName.replace(/^.*?\]\s*/,''))!==$('skinCurrentName').value.trim())return toast('Save the skin name and CSS before activating.',true);try{const changed=selectDossierSkin(source,skin.id);skinMarkDirty(changed);setSkinSaveStatus(changed?'Active in native preset · export JSON':'Already active · export JSON to keep changes');toast(changed?'Selected this skin in the native preset. Export JSON to keep it.':'This skin is already active.');}catch(e){toast(e.message,true);}});
+ $('skinCurrentName').addEventListener('input',()=>setSkinSaveStatus('Unsaved skin name · Save skin to commit'));
  $('skinVariantSource').addEventListener('input',()=>{setSkinSaveStatus('Unsaved changes · save skin to commit');applySkinStylesWithoutReload();});
  $('skinVariantSource').addEventListener('change',()=>renderSkinPart());
  $('skinSaveVariant').addEventListener('click',()=>{
   const source=nativeSkinSource(),skin=dossierSkins(source).find(s=>s.id===state.dossierSkinId);if(!skin)return toast('Select a native dossier skin.',true);
-  try{const value=cssSafeForStyle($('skinVariantSource').value),edits=patchNativeRegex(source,skin.id,{replaceString:value});skinMarkDirty(edits);setSkinSaveStatus(edits?'Saved · export native JSON':'No changes');applySkinStylesWithoutReload();toast(edits?'Native dossier variable changes saved to both mirrors.':'Dossier skin unchanged.');}
+  try{const edits=saveDossierSkin(source,skin.id,$('skinCurrentName').value,$('skinVariantSource').value);skinMarkDirty(edits);$('skinManageName').textContent=$('skinCurrentName').value.trim();renderDossierSkinOptions();for(const option of $('skinBase').options){if(option.value===skin.id)option.textContent=$('skinCurrentName').value.trim();}setSkinSaveStatus(edits?'Name and CSS saved · export native JSON':'No changes');applySkinStylesWithoutReload();toast(edits?'Skin name, metadata and CSS saved to both mirrors.':'Dossier skin unchanged.');}
   catch(e){toast(e.message,true);}
  });
- $('skinImportSingle').addEventListener('click',()=>$('skinImportFile').click());
+ $('skinImportSingle').addEventListener('click',()=>{$('skinImportStatus').hidden=true;$('skinImportFile').click();});
  $('skinImportFile').addEventListener('change',async(event)=>{
   const file=event.target.files?.[0];event.target.value='';if(!file)return;
-  const source=nativeSkinSource();if(detectNativeFormat(source)!=='lumi')return toast('Load a Lumiverse preset first.',true);
+  const source=nativeSkinSource();if(detectNativeFormat(source)!=='lumi'){setSkinImportStatus('Load a Lumiverse preset first.',true);return toast('Load a Lumiverse preset first.',true);}
   const selected=dossierSkins(source).find(s=>s.id===state.dossierSkinId);
-  if(selected&&selected.replaceString!==$('skinVariantSource').value)return toast('Save or discard current skin edits before importing.',true);
+  if(selected&&(selected.replaceString!==$('skinVariantSource').value||(selected.scriptName.replace(/^.*?\]\s*/,''))!==$('skinCurrentName').value.trim())){setSkinImportStatus('Save current skin name/CSS before importing.',true);return toast('Save or discard current skin edits before importing.',true);}
   try{if(file.size>180000)throw Error('Individual skin JSON is too large.');const portable=JSON.parse(await file.text());
-   const id=importIndividualDossierSkin(source,portable);state.dossierSkinId=id;markNativeDirty();renderDossierVariables();toast('Imported one native skin into both mirrors. Use in preset and export the full JSON to keep it.');
-  }catch(e){toast(`Skin import rejected: ${e.message}`,true);}
+   const id=importIndividualDossierSkin(source,portable);state.dossierSkinId=id;markNativeDirty();renderDossierVariables();setSkinSaveStatus(`Imported ${$('skinCurrentName').value} · activate or edit`);setSkinImportStatus(`Imported ${$('skinCurrentName').value} into both preset mirrors. Activate or edit it, then export the full preset.`);toast('Imported one native skin into both mirrors. Use in preset and export full JSON to keep it.');
+  }catch(e){setSkinSaveStatus(`Skin import rejected: ${e.message}`);setSkinImportStatus(`Skin import rejected: ${e.message}`,true);toast(`Skin import rejected: ${e.message}`,true);}
  });
  $('skinCreate').addEventListener('click',()=>{
   const source=nativeSkinSource();if(detectNativeFormat(source)!=='lumi')return toast('Native dossier skins are Lumiverse-only.',true);
-  try{const previous=dossierSkins(source).find(s=>s.id===state.dossierSkinId);if(previous&&previous.replaceString!==$('skinVariantSource').value)return toast('Save or discard your CSS edits before cloning a new skin.',true);const id=addCustomDossierSkin(source,state.dossierSkinId,$('skinName').value);markNativeDirty();state.dossierSkinId=id;renderDossierVariables();toast('Cloned a real native dossier skin, including every CSS token. Export JSON to keep it.');}
+  try{const previous=dossierSkins(source).find(s=>s.id===state.dossierSkinId);if(previous&&(previous.replaceString!==$('skinVariantSource').value||(previous.scriptName.replace(/^.*?\]\s*/,''))!==$('skinCurrentName').value.trim()))return toast('Save or discard your CSS edits before cloning a new skin.',true);const id=addCustomDossierSkin(source,state.dossierSkinId,$('skinName').value);markNativeDirty();state.dossierSkinId=id;renderDossierVariables();toast('Cloned a real native dossier skin, including every CSS token. Export JSON to keep it.');}
   catch(e){toast(e.message,true);}
  });
 }
