@@ -1,0 +1,66 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {dirname,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {getActualRegexScripts,auditFixtureContracts,regexPatternFingerprint} from '../js/native.js';
+import {transformRegex} from '../js/core.js';
+import {hasRenderableReplacement} from '../js/workbench.js';
+import {SHOWCASE_GROUPS,showcaseGroup,resolveShowcaseFixture,resolveShowcaseScripts,makeShowcaseCatalog,sourceHasPreviewHtml} from '../js/showcase.js';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+const load=p=>JSON.parse(readFileSync(resolve(root,p),'utf8'));
+const sources={lumi:load('data/native/lumiverse.json'),st:load('data/native/sillytavern.json')};
+const contracts=load('data/fixtures/contract-fixtures.json').fixtures;
+const extra=load('data/fixtures/showcase-samples.json').fixtures;
+const snaps=load('data/fixtures/showcase-snapshots.json').snapshots;
+const gallery=extra;
+test('the focused literary gallery contains original matching packets, without social or tracker exhibits',()=>{
+ assert.equal(extra.length,13);
+ assert.equal(snaps.length,13);
+ assert.equal(new Set(gallery.map(f=>f.id)).size,gallery.length);
+ assert.ok(extra.filter(f=>f.platform==='lumi').every(f=>!['Social','Tracking'].includes(f.group)));
+ for(const fixture of gallery){
+  const platform=fixture.platform||'lumi',scripts=getActualRegexScripts(sources[platform]);
+  const actual=resolveShowcaseFixture(scripts,fixture),pipeline=resolveShowcaseScripts(scripts,fixture);
+  assert.ok(actual,fixture.id);assert.ok(pipeline,fixture.id);
+  assert.equal(auditFixtureContracts(sources[platform],[fixture])[0].ok,true,fixture.id);
+  const result=transformRegex(fixture.input,pipeline,{curatedCascade:true});
+  assert.ok(sourceHasPreviewHtml(result),fixture.id);
+  assert.equal(result.log.filter(x=>x.changed).length,pipeline.length,fixture.id+' incomplete regex sequence');
+  const snapshot=snaps.find(s=>s.id===fixture.id);
+  assert.ok(snapshot,fixture.id);
+  assert.equal(snapshot.patternFingerprint,regexPatternFingerprint(actual.findRegex));
+  assert.equal(snapshot.replacementFingerprint,regexPatternFingerprint(actual.replaceString));
+  assert.equal(snapshot.inputFingerprint,regexPatternFingerprint(fixture.input));
+  assert.equal(snapshot.output,result.output,`${fixture.id} snapshot drifted from native replacement`);
+ }
+});
+test('Gabrielle scene powers native paragraph effects, marginal notes, POV, chaos, thoughts, and telemetry',()=>{
+ const find=id=>extra.find(f=>f.id===id);
+ for(const id of ['text-effects','marginalia','pov','thoughts','event-chaos','gabi-mutter','gabi-monitor','gabi-commentary'])assert.ok(find(id),id);
+ assert.equal(find('text-effects').scriptNames.length,8);
+ assert.equal(find('marginalia').scriptNames.length,4);
+ assert.match(find('text-effects').input,/you just buried the third fault/);
+ assert.match(find('gabi-monitor').input,/residential locks/);
+ const src=getActualRegexScripts(sources.lumi),f=find('text-effects');
+ const changed=src.map(s=>s.scriptName===f.scriptNames[0]?{...s,findRegex:s.findRegex+' changed'}:s);
+ assert.equal(resolveShowcaseScripts(changed,f),null,'composite fixture rejects modified regex, not just its primary source');
+});
+test('source catalogue preserves complete native scripts and explicitly distinguishes visual vs nonvisual',()=>{
+ const lumi=getActualRegexScripts(sources.lumi),st=getActualRegexScripts(sources.st);
+ assert.equal(lumi.length,220);assert.equal(st.length,22);
+ assert.equal(lumi.filter(hasRenderableReplacement).length,156);
+ assert.equal(st.filter(hasRenderableReplacement).length,16);
+ assert.deepEqual(SHOWCASE_GROUPS,['All','Tracking','Social','Decorations','Typography','Documents','Gabrielle','Other']);
+ assert.equal(showcaseGroup(lumi.find(s=>s.scriptName.includes('[TRACK] State Record'))),'Tracking');
+ assert.equal(showcaseGroup(st.find(s=>s.scriptName.includes('[Discord] 01'))),'Social');
+ assert.equal(showcaseGroup(lumi.find(s=>s.scriptName.includes('[VISUALS] VT · Neon'))),'Typography');
+ const lumiCatalog=makeShowcaseCatalog(lumi,gallery,'lumi');
+ const stCatalog=makeShowcaseCatalog(st,gallery,'st');
+ assert.equal(lumiCatalog.samples.length,10);
+ assert.equal(stCatalog.samples.length,3);
+ assert.equal(lumiCatalog.byGroup.reduce((n,x)=>n+x.scripts.length,0),lumi.length);
+ assert.equal(stCatalog.byGroup.reduce((n,x)=>n+x.scripts.length,0),st.length);
+ assert.equal(resolveShowcaseFixture(lumi,{scriptName:'never-in-native-source'}),null);
+ assert.equal(sourceHasPreviewHtml({output:'changed words',log:[{changed:true}]}),false);
+});

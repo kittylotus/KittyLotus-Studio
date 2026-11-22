@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "kind": "kittylotus-regex-showcase-fixtures",
+  "fixtures": [
+    {
+      "id": "text-effects",
+      "name": "The bridge incident · Text FX",
+      "platform": "lumi",
+      "group": "Typography",
+      "kind": "Eight native inline effects",
+      "scriptName": "💬 [VISUALS] VE · Rage",
+      "input": "<article style=\"max-width:750px;margin:auto;font:17px/1.85 Georgia,serif;color:#eee7f2\">\n<p>\"Already froze the branch before I sent the ping, sweetheart, your live push isn't going anywhere.\"</p>\n<p>\"[[ve:rage]]You did what? Kitty, if you sandboxed a mid-compile thread, you just buried the third fault under forty layers of garbage logs![[/ve:rage]]\"</p>\n<p>All three monitors flashed stark white, dumped a rolling wall of [[vt:neon]]FAILED ROLLBACK[[/vt]] lines, and triggered a sharp containment chime from the ceiling vent. His right-eye interface threw [[ve:haze]]a violent smear of ghosted hexadecimal[[/ve:haze]] across the dark lens of his brow.</p>\n<p>\"[[ve:whisper]]Session is over, Gabrielle.[[/ve:whisper]]\" Zephyr said. Watching the flushed scorch stripe above his brow, [[ve:fear]]Zephyr felt a cold, steady tightness settle behind his ribs[[/ve:fear]].</p>\n<p>\"You had forty hours without anyone hovering. [[ve:crossed]]You lost an eyebrow and blew a live conduit.[[/ve:crossed]]\"</p>\n<p>[[ve:memory]]The heavy bulkhead groaned shut behind them, shearing the roar of the cooling fans down to a distant vibration beneath the deck plates.[[/ve:memory]]</p>\n<p>Ten feet ahead, the lift doors chimed without being called, slid halfway apart with a grinding shudder, and jammed hard against a glitching proximity sensor. [[ve:chaos]]The overhead strips snapped violently into stark emergency crimson.[[/ve:chaos]]</p>\n<p>\"Looks like Kitty's sandbox is leaking, big guy. Still want to lock me in a dark room while the hallway eats itself?\"</p>\n</article>",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "scriptNames": [
+        "💬 [VISUALS] VT · Neon",
+        "💬 [VISUALS] VE · Rage",
+        "💬 [VISUALS] VE · Whisper",
+        "💬 [VISUALS] VE · Fear",
+        "💬 [VISUALS] VE · Haze",
+        "💬 [VISUALS] VE · Crossed",
+        "💬 [VISUALS] VE · Memory",
+        "💬 [VISUALS] VE · Chaos"
+      ],
+      "patternFingerprint": "6df2a13f",
+      "scriptContracts": {
+        "💬 [VISUALS] VT · Neon": {
+          "pattern": "2249d829",
+          "replacement": "5435cd08"
+        },
+        "💬 [VISUALS] VE · Rage": {
+          "pattern": "6df2a13f",
+          "replacement": "5f44bf92"
+        },
+        "💬 [VISUALS] VE · Whisper": {
+          "pattern": "429c0297",
+          "replacement": "e17006fb"
+        },
+        "💬 [VISUALS] VE · Fear": {
+          "pattern": "cf7857c5",
+          "replacement": "b424d229"
+        },
+        "💬 [VISUALS] VE · Haze": {
+          "pattern": "37bc7b3d",
+          "replacement": "c70256a4"
+        },
+        "💬 [VISUALS] VE · Crossed": {
+          "pattern": "2f3dba7f",
+          "replacement": "143d959d"
+        },
+        "💬 [VISUALS] VE · Memory": {
+          "pattern": "4e54fd1f",
+          "replacement": "e8fb4d6d"
+        },
+        "💬 [VISUALS] VE · Chaos": {
+          "pattern": "3923c133",
+          "replacement": "e6deb826"
+        }
+      }
+    },
+    {
+      "id": "marginalia",
+      "name": "Marginal notes · Click for lore",
+      "platform": "lumi",
+      "group": "Typography",
+      "kind": "Four original native popovers",
+      "scriptName": "📝 [FOOTNOTES] Wrapped term · clickable phrase · native popover",
+      "input": "<article style=\"max-width:740px;margin:auto;font:17px/1.8 Georgia,serif;color:#eee7f2\"><p>Gabrielle snapped the [[term#fn-0-1: manual bridge override | A hardware toggle connected directly to the local control bridge]], and the conduit threw a shower of white sparks across his boots.</p><p>His right optic flooded with [[note#fn-0-2: ghosted hexadecimal | The current clamp temporarily corrupted the visual overlay]]. Zephyr caught the [[lore#fn-0-3: magnetic security keycard | A badge granting access to facility routing and residential locks]] before Gabrielle could reach the rack.</p><p>Kitty watched the monitor flash crimson. [[aside#fn-0-4: This is fine | The rollback is currently rewriting the corridor lighting schedule]].</p></article>",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "scriptNames": [
+        "📝 [FOOTNOTES] Wrapped term · clickable phrase · native popover",
+        "📝 [FOOTNOTES] Wrapped note · clickable phrase · native popover",
+        "📝 [FOOTNOTES] Wrapped lore · clickable phrase · native popover",
+        "📝 [FOOTNOTES] Wrapped aside · clickable phrase · native popover"
+      ],
+      "patternFingerprint": "522ef497",
+      "scriptContracts": {
+        "📝 [FOOTNOTES] Wrapped term · clickable phrase · native popover": {
+          "pattern": "522ef497",
+          "replacement": "abb75e07"
+        },
+        "📝 [FOOTNOTES] Wrapped note · clickable phrase · native popover": {
+          "pattern": "42367b15",
+          "replacement": "fd709a0c"
+        },
+        "📝 [FOOTNOTES] Wrapped lore · clickable phrase · native popover": {
+          "pattern": "1f672b45",
+          "replacement": "7a65a547"
+        },
+        "📝 [FOOTNOTES] Wrapped aside · clickable phrase · native popover": {
+          "pattern": "8f475d37",
+          "replacement": "0fbea77b"
+        }
+      }
+    },
+    {
+      "id": "pov",
+      "name": "POV shift · Zephyr",
+      "platform": "lumi",
+      "group": "Decorations",
+      "kind": "Original POV separator",
+      "scriptName": "🧩 [DECORATIONS] POV change",
+      "input": "[POV]ZEPHYR · The moment the red warning lamps flickered, he stopped treating this as another argument.[/POV]",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "patternFingerprint": "1a6530e4",
+      "scriptContracts": {
+        "🧩 [DECORATIONS] POV change": {
+          "pattern": "1a6530e4",
+          "replacement": "d668e953"
+        }
+      }
+    },
+    {
+      "id": "thoughts",
+      "name": "Thoughts · Zephyr sees the signs",
+      "platform": "lumi",
+      "group": "Decorations",
+      "kind": "Epigraph thought reveal",
+      "scriptName": "🧠 [Thoughts] Epigraph reveal",
+      "input": "<!-- KL_THOUGHT_START -->{\"character\":\"Zephyr\",\"thought\":\"He had blown a conduit, lost an eyebrow, and still wanted the keyboard. Forty hours without sleep had finally collected their debt.\"}<!-- KL_THOUGHT_END -->",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "patternFingerprint": "b6195d68",
+      "scriptContracts": {
+        "🧠 [Thoughts] Epigraph reveal": {
+          "pattern": "b6195d68",
+          "replacement": "b6f47d64"
+        }
+      }
+    },
+    {
+      "id": "event-chaos",
+      "name": "Emergency event · Chaos",
+      "platform": "lumi",
+      "group": "Decorations",
+      "kind": "Event card plus inline chaos",
+      "scriptName": "🧩 [DECORATIONS] Event Randomizer",
+      "input": "<p style=\"font:18px Georgia;color:#eee7f2;margin:12px auto;max-width:620px\">[[ve:chaos]]THE LIFT DOORS JAMMED AGAINST A GLITCHING SENSOR[[/ve:chaos]]</p>\n{\"stakes\":\"chaos\",\"roll\":19,\"event\":\"Facility routing begins rewriting the corridor lighting schedule while Gabrielle pockets Zephyr's security keycard.\"}",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "scriptNames": [
+        "🧩 [DECORATIONS] Event Randomizer",
+        "💬 [VISUALS] VE · Chaos"
+      ],
+      "patternFingerprint": "2d846438",
+      "scriptContracts": {
+        "🧩 [DECORATIONS] Event Randomizer": {
+          "pattern": "2d846438",
+          "replacement": "a6481a45"
+        },
+        "💬 [VISUALS] VE · Chaos": {
+          "pattern": "3923c133",
+          "replacement": "e6deb826"
+        }
+      }
+    },
+    {
+      "id": "gabi-mutter",
+      "name": "Gabi mutters · Threat to CSS",
+      "platform": "lumi",
+      "group": "Gabrielle",
+      "kind": "Native operator aside",
+      "scriptName": "✨[Gabi]  Muttering Box",
+      "input": "<!-- GABI_START -->{\"cmd\":\"./audit --rollback --contain\",\"comment\":\"If you clear my cache, Kitty, I will haunt your CSS until the heat death of the universe.\"}<!-- GABI_END -->",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "patternFingerprint": "9367731c",
+      "scriptContracts": {
+        "✨[Gabi]  Muttering Box": {
+          "pattern": "9367731c",
+          "replacement": "aec35f8a"
+        }
+      }
+    },
+    {
+      "id": "gabi-monitor",
+      "name": "Gabi Monitor · Containment",
+      "platform": "lumi",
+      "group": "Gabrielle",
+      "kind": "Resolved narrative telemetry",
+      "scriptName": "✨[Gabi] Narrative Telemetry",
+      "input": "<!-- GABI_RESOLVED_START -->{\"mode\":\"scene-monitor\",\"focus\":\"Corridor lighting and residential locks\",\"previous\":\"41\",\"current\":\"87\",\"delta\":\"+46\",\"trend\":\"rising\",\"band\":\"critical\",\"signals\":\"routing|rollback|locks\",\"signal_text\":\"facility routing bridge compromised\",\"signal_count\":\"3\",\"turn\":\"27\",\"accent\":\"#e56b8a\",\"comment\":\"Kitty says we have three minutes before the locks go. Zephyr, put me down and hand over a keyboard.\"}<!-- GABI_RESOLVED_END -->",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "patternFingerprint": "4c40a52d",
+      "scriptContracts": {
+        "✨[Gabi] Narrative Telemetry": {
+          "pattern": "4c40a52d",
+          "replacement": "10642c91"
+        }
+      }
+    },
+    {
+      "id": "gabi-commentary",
+      "name": "Kitty comments · Periodic monitor",
+      "platform": "lumi",
+      "group": "Gabrielle",
+      "kind": "Original monitor packet",
+      "scriptName": "✨[Gabi] Periodic commentary · Display",
+      "input": "<!-- GABI_MONITOR_START -->{\"mode\":\"periodic\",\"focus\":\"Gabrielle's unsupervised maintenance\",\"signals\":\"burn|current clamp|lost eyebrow\",\"comment\":\"Kitty: Sleep first, threaten me later, menace. I'll keep the roof from falling in until your eyebrows grow back.\"}<!-- GABI_MONITOR_END -->",
+      "notes": "Uses original Lumiverse regex replacements. Scene excerpts are from the supplied Gabrielle / Kitty / Zephyr scene; host-only actions are disabled.",
+      "showcase": true,
+      "patternFingerprint": "d3ba9498",
+      "scriptContracts": {
+        "✨[Gabi] Periodic commentary · Display": {
+          "pattern": "d3ba9498",
+          "replacement": "503092a2"
+        }
+      }
+    },
+    {
+      "id": "slowburn",
+      "name": "Slowburn signal",
+      "platform": "lumi",
+      "group": "Decorations",
+      "kind": "Relationship pacing",
+      "scriptName": "🧩 [DECORATIONS] Slowburn Engine",
+      "patternFingerprint": "2f0f279b",
+      "input": "{\"h\":\"2\",\"s\":\"4\",\"r\":\"12\",\"c\":\"Gabrielle suspects the workshop has a visitor.\",\"l\":\"Trust advances one careful answer at a time.\"}",
+      "notes": "Verified against the bundled Lumiverse relationship pacing regex. Original replacement HTML; host interactions are not simulated.",
+      "showcase": true,
+      "scriptContracts": {
+        "🧩 [DECORATIONS] Slowburn Engine": {
+          "pattern": "2f0f279b",
+          "replacement": "ebb240e6"
+        }
+      }
+    },
+    {
+      "id": "chapter",
+      "name": "Webnovel chapter",
+      "platform": "lumi",
+      "group": "Decorations",
+      "kind": "Chapter framing",
+      "scriptName": "🧩 [WEBNOVEL]  Pretty Titles",
+      "patternFingerprint": "73bfbfb6",
+      "input": "<chap>Chapter 07|The Unfinished Index</chap>",
+      "notes": "Verified against the bundled Lumiverse chapter framing regex. Original replacement HTML; host interactions are not simulated.",
+      "showcase": true,
+      "scriptContracts": {
+        "🧩 [WEBNOVEL]  Pretty Titles": {
+          "pattern": "73bfbfb6",
+          "replacement": "5035bedc"
+        }
+      }
+    },
+    {
+      "id": "st-gabibox",
+      "name": "Gabi status card",
+      "platform": "st",
+      "group": "Gabrielle",
+      "kind": "Character overlay",
+      "scriptName": "🧩 [Gabi]  — GabiBox",
+      "patternFingerprint": "7940e38c",
+      "input": "{\"dot_color\":\"#70ddff\",\"badge_color_start\":\"#6548db\",\"badge_color_end\":\"#352268\",\"badge_text\":\"GABRIELLE\",\"content_template\":\"The archive is behaving. Suspiciously.\",\"status\":\"STANDBY\"}",
+      "notes": "Verified against the bundled SillyTavern character overlay regex. Original replacement HTML; host interactions are not simulated.",
+      "showcase": true,
+      "scriptContracts": {
+        "🧩 [Gabi]  — GabiBox": {
+          "pattern": "7940e38c",
+          "replacement": "1019b5af"
+        }
+      }
+    },
+    {
+      "id": "st-chapter",
+      "name": "Webnovel title",
+      "platform": "st",
+      "group": "Decorations",
+      "kind": "Chapter framing",
+      "scriptName": "🧩 [WEBNOVEL] — Pretty Titles",
+      "patternFingerprint": "96b6b819",
+      "input": "<chap>Chapter 07|The Unfinished Index</chap>",
+      "notes": "Verified against the bundled SillyTavern chapter framing regex. Original replacement HTML; host interactions are not simulated.",
+      "showcase": true,
+      "scriptContracts": {
+        "🧩 [WEBNOVEL] — Pretty Titles": {
+          "pattern": "96b6b819",
+          "replacement": "5035bedc"
+        }
+      }
+    },
+    {
+      "id": "st-weather",
+      "name": "Weather header",
+      "platform": "st",
+      "group": "Decorations",
+      "kind": "Scene environment",
+      "scriptName": "🧩 [DECOR] — Weather Header",
+      "patternFingerprint": "e0d49a69",
+      "input": "[weather_header]style=rain_night time=19:10 location=Gabrielle’s archive condition=Rain img_url= img_alt=Rain against the glass[/weather_header]",
+      "notes": "Verified against the bundled SillyTavern scene environment regex. Original replacement HTML; host interactions are not simulated.",
+      "showcase": true,
+      "scriptContracts": {
+        "🧩 [DECOR] — Weather Header": {
+          "pattern": "e0d49a69",
+          "replacement": "d32c5e6e"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+/* Mobile-only density adjustment for the entire Studio. Do not force desktop breakpoints.
+   CSS zoom participates in layout, unlike transform:scale(), so inputs and hit targets stay aligned. */
+@media (max-width:700px) {
+  body { zoom: .92; }
+  /* A native regex display must remain scrollable instead of being squeezed into an unreadable column. */
+  #view-regex .cascade-stage,
+  #view-regex .showcase-feature-body,
+  #view-regex .regex-render { min-width: 0; }
+  #view-regex .cascade-stage iframe,
+  #view-regex .showcase-feature-body iframe,
+  #view-regex .regex-render iframe { display: block; width: 100%; }
+  #view-regex .regex-edit-grid textarea,
+  #view-regex .regex-tester .code-textarea,
+  #view-regex .regex-output .code-textarea { overflow-x: auto; white-space: pre; }
+}
+@media (max-width:390px) {
+  body { zoom: .90; }
+}

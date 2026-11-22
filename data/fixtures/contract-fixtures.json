@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "id": "gabi-live",
+      "name": "Gabi Live Feed",
+      "input": "<!-- GABI_START -->{\"cmd\":\"./scenectl --new-constraint --no-recap\",\"comment\":\"Kitty’s stalling. Push with environment, not introspection.\"}<!-- GABI_END -->",
+      "scriptQuery": "Muttering Box",
+      "source": "KittyLotus Lumiverse v6 snapshot; prompt/regex contract",
+      "notes": "Gabi explains why an internal command should not become visible HTML. Diagnostic fixture for the Muttering Box rule.",
+      "scriptName": "✨[Gabi]  Muttering Box",
+      "patternFingerprint": "9367731c",
+      "snapshotFile": "data/native/lumiverse.json"
+    },
+    {
+      "id": "dossier-skin",
+      "name": "Default Dossier Skin",
+      "input": "/*@@RX_DOSSIER_SKIN@@*/",
+      "scriptQuery": "Regex Skins",
+      "source": "KittyLotus Lumiverse v6 snapshot; prompt/regex contract",
+      "notes": "Preview is browser-side only; host macros and execution stages may differ.",
+      "scriptName": "🎨 [Regex Skins] Default Purple",
+      "patternFingerprint": "b61d1263",
+      "snapshotFile": "data/native/lumiverse.json"
+    },
+    {
+      "id": "weather-raw",
+      "name": "Weather / raw payload",
+      "input": "{\"preset\":\"rain_night\",\"time\":\"19:10\",\"location\":\"Gabrielle’s archive\",\"condition\":\"Rain\",\"alt\":\"Gabi: The rain is a mood, not a regex delimiter.\"}",
+      "scriptQuery": "[DECORATIONS] Weather Resolver",
+      "source": "KittyLotus Lumiverse upload; exact regex packet syntax",
+      "notes": "Host-level macros, rendering services and execution stages are not emulated.",
+      "scriptName": "🧩 [DECORATIONS] Weather Resolver",
+      "patternFingerprint": "d3d37b26",
+      "snapshotFile": "data/native/lumiverse.json"
+    },
+    {
+      "id": "discord-message",
+      "name": "Discord / message packet",
+      "input": "[dcmsg][author]Gabrielle[/author][color]#a98df5[/color][time]19:10[/time][text]Gabi: This sample exercises the actual Discord packet. No fabricated HTML, please.[/text][/dcmsg]",
+      "scriptQuery": "DISCORD] 01 Messages",
+      "source": "KittyLotus Lumiverse upload; exact regex packet syntax",
+      "notes": "Host-level macros, rendering services and execution stages are not emulated.",
+      "scriptName": "🌐[SOCIAL V2 / DISCORD] 01 Messages + Attachment Slot",
+      "patternFingerprint": "0f572d76",
+      "snapshotFile": "data/native/lumiverse.json"
+    },
+    {
+      "id": "state-record",
+      "name": "State / native record",
+      "input": "<track>[time]19:10[/time][place]Gabrielle’s local archive[/place][mode]Focused debugging[/mode][present]Gabrielle, Kitty[/present][goal]Find the missing fixture[/goal][change]Gabi: The renderer expects real input tags, so here they are.[/change]</track>",
+      "scriptQuery": "[TRACK] State Record",
+      "source": "KittyLotus Lumiverse upload; exact regex packet syntax",
+      "notes": "Host-level macros, rendering services and execution stages are not emulated.",
+      "scriptName": "🧩 [TRACK] State Record",
+      "patternFingerprint": "47145800",
+      "snapshotFile": "data/native/lumiverse.json"
+    },
+    {
+      "id": "aux-record",
+      "name": "Aux / native submodules",
+      "input": "<track_aux>[threads]Gabi: Check the source packet before blaming the CSS[/threads][inventory]Debugging notebook[/inventory][relationship][stage]Cooperative investigation[/stage][trust]Earned[/trust][tension]Low[/tension][power]Balanced[/power][/relationship]</track_aux>",
+      "scriptQuery": "[TRACK]  Aux",
+      "source": "KittyLotus Lumiverse upload; exact regex packet syntax",
+      "notes": "Host-level macros, rendering services and execution stages are not emulated.",
+      "scriptName": "🧩 [TRACK]  Aux",
+      "patternFingerprint": "81d5a74c",
+      "snapshotFile": "data/native/lumiverse.json"
+    },
+    {
+      "id": "motive-lumi",
+      "name": "Gabi / Motive Ledger (Lumiverse)",
+      "platform": "lumi",
+      "input": "<details><summary>✦ writing ledger...</summary>\n[Motive Ledger] {\"id\":\"m24681012\",\"drive\":\"Gabrielle wants to get the narrative engine responding instead of recapping.\",\"pressure\":\"A missing library index and an inconvenient deadline.\",\"short_1\":\"Find the index key\",\"short_1_state\":\"active\",\"short_2\":\"Keep Kitty out of a recap loop\",\"short_2_state\":\"at risk\",\"short_3\":\"Inspect the archive terminal\",\"short_3_state\":\"pending\",\"long_1\":\"Identify who rewrote the library log\",\"long_1_state\":\"active\",\"long_2\":\"Keep the workshop accessible\",\"long_2_state\":\"pending\",\"long_3\":\"Get everyone home before dawn\",\"long_3_state\":\"uncertain\",\"thoughts\":\"Gabi: The interface is innocent. It is the payload that is being dramatic.\",\"trace_1\":\"The library clock just skipped three minutes.\",\"trace_2\":\"The terminal logged a second visitor.\",\"trace_3\":\"Kitty found the index entry under a false title.\"} [/Motive Ledger]\n</details>",
+      "scriptName": "🧩 [TRACK] Motive Ledger",
+      "scriptQuery": "Motive Ledger",
+      "patternFingerprint": "4096cf40",
+      "snapshotFile": "data/native/lumiverse.json",
+      "source": "Bundled native Motive Ledger renderer and fully populated Gabi diagnostic packet",
+      "notes": "All keys match the actual ledger capture contract. Gabi annotates pressure, goals and traces rather than serving as a generic placeholder."
+    },
+    {
+      "id": "motive-st",
+      "name": "Gabi / Motive Ledger (SillyTavern)",
+      "platform": "st",
+      "input": "<details><summary>✦ writing ledger...</summary>\n[Motive Ledger] {\"id\":\"m24681012\",\"drive\":\"Gabrielle wants to get the narrative engine responding instead of recapping.\",\"pressure\":\"A missing library index and an inconvenient deadline.\",\"short_1\":\"Find the index key\",\"short_1_state\":\"active\",\"short_2\":\"Keep Kitty out of a recap loop\",\"short_2_state\":\"at risk\",\"short_3\":\"Inspect the archive terminal\",\"short_3_state\":\"pending\",\"long_1\":\"Identify who rewrote the library log\",\"long_1_state\":\"active\",\"long_2\":\"Keep the workshop accessible\",\"long_2_state\":\"pending\",\"long_3\":\"Get everyone home before dawn\",\"long_3_state\":\"uncertain\",\"thoughts\":\"Gabi: The interface is innocent. It is the payload that is being dramatic.\",\"trace_1\":\"The library clock just skipped three minutes.\",\"trace_2\":\"The terminal logged a second visitor.\",\"trace_3\":\"Kitty found the index entry under a false title.\"} [/Motive Ledger]\n</details>",
+      "scriptName": "🧩 [TRACK] 03 — Motive Ledger",
+      "scriptQuery": "Motive Ledger",
+      "patternFingerprint": "4096cf40",
+      "snapshotFile": "data/native/sillytavern.json",
+      "source": "Bundled native Motive Ledger renderer and fully populated Gabi diagnostic packet",
+      "notes": "All keys match the actual ledger capture contract. Gabi annotates pressure, goals and traces rather than serving as a generic placeholder."
+    }
+  ]
+}

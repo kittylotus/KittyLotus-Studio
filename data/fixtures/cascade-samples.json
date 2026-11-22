@@ -1,0 +1,448 @@
+{
+  "version": 1,
+  "cascades": [
+    {
+      "id": "omni-tracker",
+      "platform": "lumi",
+      "name": "Omni Tracker: full dashboard",
+      "category": "Trackers",
+      "kicker": "MULTI-MODULE PIPELINE",
+      "description": "One canonical KLMT packet becomes a navigable dossier. The shell is native; specialized regexes render the state, motive, psyche, scene, inventory, relationship map, inspectables and knowledge graph.",
+      "notes": "The stable preview ID stands in for Lumiverse’s runtime random macro. Host actions are not executed.",
+      "scriptNames": [
+        "📑 [OMNI TRACKER] Unified shell and selector",
+        "📑 [OMNI TRACKER] Scene adapter",
+        "📑 [OMNI TRACKER] Inspect adapter",
+        "📑 [OMNI TRACKER] Social adapter",
+        "📑 [OMNI TRACKER] Knowledge adapter",
+        "📑 [OMNI TRACKER] Inspect item + staged action",
+        "📑 [OMNI TRACKER] Social actor",
+        "📑 [OMNI TRACKER] Knowledge actor",
+        "📑 [OMNI TRACKER] Knowledge fact",
+        "📑 [OMNI TRACKER] State record",
+        "📑 [OMNI TRACKER] State modules",
+        "📑 [OMNI TRACKER] Motive ledger",
+        "📑 [OMNI TRACKER] Psyche wrapper",
+        "📑 [OMNI TRACKER] Psyche record",
+        "🧩 [TRACK]  Aux Threads · structured display",
+        "🧩 [TRACK]  Aux Inventory · structured display",
+        "🧩 [TRACK]  Aux Stage · structured display",
+        "🧩 [TRACK]  Aux Axes · structured display"
+      ],
+      "requiredMatches": [
+        "📑 [OMNI TRACKER] Unified shell and selector"
+      ],
+      "variants": [
+        {
+          "id": "all-modules",
+          "label": "All eight modules",
+          "input": "<!-- KL_MULTI_TRACKER_START -->\n<klmt id=\"mt24681012\">\n<modules>state|aux|motive|psyche|scene|inspect|social|knowledge</modules>\n<mt:state><time>14:10</time><place>Library archive room</place><mode>investigation</mode><present>Gabrielle, Mara, and the archivist</present><goal>Find the missing index before closing</goal><change>Gabi realizes the catalog entries were rearranged</change></mt:state>\n<mt:aux><threads>[[aux.thread|urgent|Index disappearance|A shelf number leads to a sealed cabinet]]</threads><inventory>[[aux.item|Gabi|Handwritten map|creased but legible]]</inventory><stage>[[aux.stage|Distrust turning into cooperation|forming|Mara offers to check the west wing]]</stage><trust>fragile, rising</trust><tension>a deadline at sunset</tension><power>The archivist controls the keys</power></mt:aux>\n<mt:motive><id>m24681012</id><drive>Gabi wants the workshop to stop recapping and start investigating</drive><pressure>A deadline and a missing library index</pressure><short_1>Find the index</short_1><short_1_state>active</short_1_state><short_2>Keep Mara in the loop</short_2><short_2_state>pending</short_2_state><short_3>Inspect the locked cabinet</short_3><short_3_state>active</short_3_state><long_1>Keep the workshop accessible</long_1><long_1_state>active</long_1_state><long_2>Protect the archive</long_2><long_2_state>pending</long_2_state><long_3>Get everyone home before dawn</long_3><long_3_state>uncertain</long_3_state><thoughts>Gabi: The pattern is too consistent to be an accident.</thoughts><trace_1>The catalog card is missing a corner.</trace_1><trace_2>The archivist checked the cabinet twice.</trace_2><trace_3>Mara found a matching stamp.</trace_3></mt:motive>\n<mt:psyche><psyche_item><id>ps24681012</id><character>Gabrielle</character><affect>focussed concern</affect><arousal>heightened</arousal><appraisal>The index was deliberately removed</appraisal><conflict>Guard the team or follow the lead</conflict><regulation>List evidence in the margin</regulation><defense>dry humor</defense><control>deliberate</control><carryover>Mara has earned a little trust</carryover><change>Gabi commits to the investigation</change><evidence>The archive door was locked from outside</evidence></psyche_item></mt:psyche>\n<mt:scene><turn>12</turn><location>Old library archive</location><time>14:10</time><date>22 Nov</date><weather>rain on the windows</weather><pov>Gabrielle</pov><beat>The map points to the sealed cabinet</beat></mt:scene>\n<mt:inspect><inspect_item><id>ix24681012</id><subject>Blue filing cabinet</subject><detail>Its lock is warm despite the cold room</detail><signal>suspicious</signal><action>Check the keyhole carefully</action></inspect_item></mt:inspect>\n<mt:social><center>Gabrielle</center><social_actor><name>Mara</name><relation>reluctant ally</relation><pressure>medium</pressure><slot>right</slot></social_actor><social_actor><name>The archivist</name><relation>withholding information</relation><pressure>high</pressure><slot>left</slot></social_actor></mt:social>\n<mt:knowledge><knowledge_actor><name>Gabrielle</name><knowledge><state>known</state><claim>The east archive was locked</claim><source>Gabi saw the seal</source><vector>direct observation</vector></knowledge><knowledge><state>inferred</state><claim>Someone moved the index</claim><source>Catalog gaps</source><vector>pattern</vector></knowledge></knowledge_actor></mt:knowledge>\n</klmt>\n<!-- KL_MULTI_TRACKER_END -->",
+          "gabi": "Gabi supplies eight synchronized modules. Click Expand Matrix inside the preview, then choose Scene, State, Motive, Psyche, Inspect, Social, or Knowledge."
+        },
+        {
+          "id": "core",
+          "label": "Core telemetry",
+          "input": "<!-- KL_MULTI_TRACKER_START -->\n<klmt id=\"mt24681012\">\n<modules>state|aux|motive|psyche</modules>\n<mt:state><time>14:10</time><place>Library archive room</place><mode>investigation</mode><present>Gabrielle, Mara, and the archivist</present><goal>Find the missing index before closing</goal><change>Gabi realizes the catalog entries were rearranged</change></mt:state>\n<mt:aux><threads>[[aux.thread|urgent|Index disappearance|A shelf number leads to a sealed cabinet]]</threads><inventory>[[aux.item|Gabi|Handwritten map|creased but legible]]</inventory><stage>[[aux.stage|Distrust turning into cooperation|forming|Mara offers to check the west wing]]</stage><trust>fragile, rising</trust><tension>a deadline at sunset</tension><power>The archivist controls the keys</power></mt:aux>\n<mt:motive><id>m24681012</id><drive>Gabi wants the workshop to stop recapping and start investigating</drive><pressure>A deadline and a missing library index</pressure><short_1>Find the index</short_1><short_1_state>active</short_1_state><short_2>Keep Mara in the loop</short_2><short_2_state>pending</short_2_state><short_3>Inspect the locked cabinet</short_3><short_3_state>active</short_3_state><long_1>Keep the workshop accessible</long_1><long_1_state>active</long_1_state><long_2>Protect the archive</long_2><long_2_state>pending</long_2_state><long_3>Get everyone home before dawn</long_3><long_3_state>uncertain</long_3_state><thoughts>Gabi: The pattern is too consistent to be an accident.</thoughts><trace_1>The catalog card is missing a corner.</trace_1><trace_2>The archivist checked the cabinet twice.</trace_2><trace_3>Mara found a matching stamp.</trace_3></mt:motive>\n<mt:psyche><psyche_item><id>ps24681012</id><character>Gabrielle</character><affect>focussed concern</affect><arousal>heightened</arousal><appraisal>The index was deliberately removed</appraisal><conflict>Guard the team or follow the lead</conflict><regulation>List evidence in the margin</regulation><defense>dry humor</defense><control>deliberate</control><carryover>Mara has earned a little trust</carryover><change>Gabi commits to the investigation</change><evidence>The archive door was locked from outside</evidence></psyche_item></mt:psyche>\n</klmt>\n<!-- KL_MULTI_TRACKER_END -->",
+          "gabi": "Gabi narrows the display to the core continuity systems. Click Expand Matrix to inspect each page."
+        },
+        {
+          "id": "world",
+          "label": "Scene & evidence",
+          "input": "<!-- KL_MULTI_TRACKER_START -->\n<klmt id=\"mt24681012\">\n<modules>scene|inspect|social|knowledge</modules>\n<mt:scene><turn>12</turn><location>Old library archive</location><time>14:10</time><date>22 Nov</date><weather>rain on the windows</weather><pov>Gabrielle</pov><beat>The map points to the sealed cabinet</beat></mt:scene>\n<mt:inspect><inspect_item><id>ix24681012</id><subject>Blue filing cabinet</subject><detail>Its lock is warm despite the cold room</detail><signal>suspicious</signal><action>Check the keyhole carefully</action></inspect_item></mt:inspect>\n<mt:social><center>Gabrielle</center><social_actor><name>Mara</name><relation>reluctant ally</relation><pressure>medium</pressure><slot>right</slot></social_actor><social_actor><name>The archivist</name><relation>withholding information</relation><pressure>high</pressure><slot>left</slot></social_actor></mt:social>\n<mt:knowledge><knowledge_actor><name>Gabrielle</name><knowledge><state>known</state><claim>The east archive was locked</claim><source>Gabi saw the seal</source><vector>direct observation</vector></knowledge><knowledge><state>inferred</state><claim>Someone moved the index</claim><source>Catalog gaps</source><vector>pattern</vector></knowledge></knowledge_actor></mt:knowledge>\n</klmt>\n<!-- KL_MULTI_TRACKER_END -->",
+          "gabi": "Gabi isolates spatial clues and the relationship graph. Click Expand Matrix to browse the modules."
+        }
+      ],
+      "scriptContracts": {
+        "📑 [OMNI TRACKER] Unified shell and selector": {
+          "pattern": "42922ad3",
+          "replacement": "00319ecd"
+        },
+        "📑 [OMNI TRACKER] Scene adapter": {
+          "pattern": "da26e444",
+          "replacement": "aea1a63a"
+        },
+        "📑 [OMNI TRACKER] Inspect adapter": {
+          "pattern": "d96187de",
+          "replacement": "59b63f21"
+        },
+        "📑 [OMNI TRACKER] Social adapter": {
+          "pattern": "536da031",
+          "replacement": "e38d1fd1"
+        },
+        "📑 [OMNI TRACKER] Knowledge adapter": {
+          "pattern": "1e18795e",
+          "replacement": "0644367f"
+        },
+        "📑 [OMNI TRACKER] Inspect item + staged action": {
+          "pattern": "3a25a3e1",
+          "replacement": "c19f46a3"
+        },
+        "📑 [OMNI TRACKER] Social actor": {
+          "pattern": "b8484473",
+          "replacement": "82387f3c"
+        },
+        "📑 [OMNI TRACKER] Knowledge actor": {
+          "pattern": "6ca08e09",
+          "replacement": "364e4e8a"
+        },
+        "📑 [OMNI TRACKER] Knowledge fact": {
+          "pattern": "0bd498df",
+          "replacement": "a2322ec0"
+        },
+        "📑 [OMNI TRACKER] State record": {
+          "pattern": "47920987",
+          "replacement": "eb72da19"
+        },
+        "📑 [OMNI TRACKER] State modules": {
+          "pattern": "d8760b8b",
+          "replacement": "7ce76965"
+        },
+        "📑 [OMNI TRACKER] Motive ledger": {
+          "pattern": "049f42ea",
+          "replacement": "1d288b70"
+        },
+        "📑 [OMNI TRACKER] Psyche wrapper": {
+          "pattern": "1ef44c6a",
+          "replacement": "960bc62b"
+        },
+        "📑 [OMNI TRACKER] Psyche record": {
+          "pattern": "333e662b",
+          "replacement": "b27a4fcd"
+        },
+        "🧩 [TRACK]  Aux Threads · structured display": {
+          "pattern": "81f7472a",
+          "replacement": "82020727"
+        },
+        "🧩 [TRACK]  Aux Inventory · structured display": {
+          "pattern": "f582c75b",
+          "replacement": "09678ee1"
+        },
+        "🧩 [TRACK]  Aux Stage · structured display": {
+          "pattern": "3c4ef3dd",
+          "replacement": "ef43d051"
+        },
+        "🧩 [TRACK]  Aux Axes · structured display": {
+          "pattern": "ca3e1791",
+          "replacement": "787f9ffa"
+        }
+      }
+    },
+    {
+      "id": "weather-system",
+      "platform": "lumi",
+      "name": "Weather studio",
+      "category": "Environment",
+      "kicker": "TWO-STAGE CASCADE",
+      "description": "Gabi writes a tiny weather preset. A resolver expands it into a weather packet; the next native regex builds the illustrated header.",
+      "notes": "Weather photographs use the original preset’s remote GitHub URLs. The native header still renders offline, but the photograph requires network access; no image is bundled or substituted.",
+      "scriptNames": [
+        "🧩 [DECORATIONS] Weather Resolver",
+        "🧩 [DECORATIONS] Weather Header"
+      ],
+      "requiredMatches": [
+        "🧩 [DECORATIONS] Weather Resolver",
+        "🧩 [DECORATIONS] Weather Header"
+      ],
+      "variants": [
+        {
+          "id": "sunny",
+          "label": "Sunlit afternoon",
+          "input": "{\"preset\": \"sunny\", \"time\": \"14:10\", \"location\": \"Gabi’s window desk\", \"condition\": \"Golden daylight on the library windows\", \"alt\": \"Gabi squinting into a sunbeam\"}",
+          "gabi": "Gabi selects sunlit afternoon and the complete header changes without editing the regex.",
+          "weather": "sunny"
+        },
+        {
+          "id": "rain-day",
+          "label": "Rainy afternoon",
+          "input": "{\"preset\": \"rain_day\", \"time\": \"16:25\", \"location\": \"Campus library\", \"condition\": \"Rain pattering against the windows\", \"alt\": \"Rain on the glass beside Gabi’s notes\"}",
+          "gabi": "Gabi selects rainy afternoon and the complete header changes without editing the regex.",
+          "weather": "rain_day"
+        },
+        {
+          "id": "clear-night",
+          "label": "Clear night",
+          "input": "{\"preset\": \"clear_night\", \"time\": \"22:40\", \"location\": \"Observatory roof\", \"condition\": \"Stars visible beyond the city\", \"alt\": \"The sky above the observatory\"}",
+          "gabi": "Gabi selects clear night and the complete header changes without editing the regex.",
+          "weather": "clear_night"
+        },
+        {
+          "id": "rain-night",
+          "label": "Rainy night",
+          "input": "{\"preset\": \"rain_night\", \"time\": \"23:15\", \"location\": \"Last bus stop\", \"condition\": \"Cold rain and distant streetlights\", \"alt\": \"An empty stop in the rain\"}",
+          "gabi": "Gabi selects rainy night and the complete header changes without editing the regex.",
+          "weather": "rain_night"
+        },
+        {
+          "id": "snow-day",
+          "label": "Snowfall",
+          "input": "{\"preset\": \"snow_day\", \"time\": \"08:30\", \"location\": \"North courtyard\", \"condition\": \"Quiet snow accumulating on the steps\", \"alt\": \"Gabi watching falling snow\"}",
+          "gabi": "Gabi selects snowfall and the complete header changes without editing the regex.",
+          "weather": "snow_day"
+        },
+        {
+          "id": "snow-night",
+          "label": "Snow after dark",
+          "input": "{\"preset\": \"snow_night\", \"time\": \"21:05\", \"location\": \"Old clock tower\", \"condition\": \"Snow drifting through the lamplight\", \"alt\": \"Moonlit snow over an old courtyard\"}",
+          "gabi": "Gabi selects snow after dark and the complete header changes without editing the regex.",
+          "weather": "snow_night"
+        }
+      ],
+      "scriptContracts": {
+        "🧩 [DECORATIONS] Weather Resolver": {
+          "pattern": "d3d37b26",
+          "replacement": "7bb036c0"
+        },
+        "🧩 [DECORATIONS] Weather Header": {
+          "pattern": "e0d49a69",
+          "replacement": "e39ae23e"
+        }
+      }
+    },
+    {
+      "id": "campaign-console",
+      "platform": "lumi",
+      "name": "Campaign console & progression",
+      "category": "Campaign",
+      "kicker": "CHARACTER SHEET + MILESTONE CASCADE",
+      "description": "Gabi’s campaign packet renders a character sheet with stats and checks. Separate rules add an earned-milestone ribbon or unspent attribute boost panel before the main console renders.",
+      "notes": "Buttons are rendered exactly as native source HTML but cannot spend points in the sandbox.",
+      "scriptNames": [
+        "🎲 [DM] 00 Pending attribute reward · clickable allocation",
+        "🎲 [DM] 00 Earned objective · compact progress ribbon",
+        "🎲 [DM] 01 Console & character sheet"
+      ],
+      "requiredMatches": [
+        "🎲 [DM] 01 Console & character sheet"
+      ],
+      "variants": [
+        {
+          "id": "milestone-one",
+          "label": "Milestone 1 / 3",
+          "input": "<!-- KL_DM_START -->\n{\"id\":\"dm24681012\",\"presentation\":\"hero\",\"sheet\":\"on\",\"expression\":\"concentrated\",\"location\":\"Archive undercroft\",\"time\":\"Day 3 · Night watch\",\"situation\":\"The seal is weakening and the library is closing\",\"goal\":\"Recover the index before the doors are barred\",\"dm\":\"Gabi: You can make progress without pretending every locked door is a boss battle.\",\"name\":\"Gabrielle\",\"identity\":\"Level 3 Archivist · investigator\",\"hp\":\"23 / 27\",\"defense\":\"14\",\"level\":\"3\",\"str\":\"10 (+0)\",\"dex\":\"14 (+2)\",\"con\":\"12 (+1)\",\"int\":\"16 (+3)\",\"wis\":\"13 (+1)\",\"cha\":\"11 (+0)\",\"abilities\":\"Pattern recognition; archival intuition; unhelpful sarcasm\",\"inventory\":\"Notebook, annotated map, brass key\",\"equipment\":\"Pocket lantern and violet field kit\",\"effects\":\"Focused; under deadline\",\"notes\":\"Advancement: 1/3 milestones; 0 unspent boosts. The index should not leave the library.\",\"change\":\"Milestone: Gabi decoded the catalog cipher.\",\"resolved\":\"Recovered the brass key\",\"die\":\"d20\",\"raw\":\"12\",\"modifier\":\"+3\",\"total\":\"15\",\"dc\":\"14\",\"check\":\"Investigation\",\"stakes\":\"Open the cabinet without alarming the archivist\"}\n<!-- KL_DM_END -->",
+          "gabi": "Gabi reports the first earned objective and current character stats."
+        },
+        {
+          "id": "milestone-two",
+          "label": "Milestone 2 / 3",
+          "input": "<!-- KL_DM_START -->\n{\"id\":\"dm24681012\",\"presentation\":\"hero\",\"sheet\":\"on\",\"expression\":\"concentrated\",\"location\":\"Archive undercroft\",\"time\":\"Day 3 · Night watch\",\"situation\":\"The seal is weakening and the library is closing\",\"goal\":\"Recover the index before the doors are barred\",\"dm\":\"Gabi: You can make progress without pretending every locked door is a boss battle.\",\"name\":\"Gabrielle\",\"identity\":\"Level 3 Archivist · investigator\",\"hp\":\"23 / 27\",\"defense\":\"14\",\"level\":\"3\",\"str\":\"10 (+0)\",\"dex\":\"14 (+2)\",\"con\":\"12 (+1)\",\"int\":\"16 (+3)\",\"wis\":\"13 (+1)\",\"cha\":\"11 (+0)\",\"abilities\":\"Pattern recognition; archival intuition; unhelpful sarcasm\",\"inventory\":\"Notebook, annotated map, brass key\",\"equipment\":\"Pocket lantern and violet field kit\",\"effects\":\"Focused; under deadline\",\"notes\":\"Advancement: 2/3 milestones; 0 unspent boosts. Gabi recovered the archive ledger.\",\"change\":\"Milestone: The archive door was opened.\",\"resolved\":\"Recovered the brass key\",\"die\":\"d20\",\"raw\":\"12\",\"modifier\":\"+3\",\"total\":\"15\",\"dc\":\"14\",\"check\":\"Investigation\",\"stakes\":\"Open the cabinet without alarming the archivist\"}\n<!-- KL_DM_END -->",
+          "gabi": "Gabi advances to the second objective. The earned ribbon updates."
+        },
+        {
+          "id": "boost",
+          "label": "Boost available",
+          "input": "<!-- KL_DM_START -->\n{\"id\":\"dm24681012\",\"presentation\":\"hero\",\"sheet\":\"on\",\"expression\":\"concentrated\",\"location\":\"Archive undercroft\",\"time\":\"Day 3 · Night watch\",\"situation\":\"The seal is weakening and the library is closing\",\"goal\":\"Recover the index before the doors are barred\",\"dm\":\"Gabi: You can make progress without pretending every locked door is a boss battle.\",\"name\":\"Gabrielle\",\"identity\":\"Level 3 Archivist · investigator\",\"hp\":\"23 / 27\",\"defense\":\"14\",\"level\":\"3\",\"str\":\"10 (+0)\",\"dex\":\"14 (+2)\",\"con\":\"12 (+1)\",\"int\":\"16 (+3)\",\"wis\":\"13 (+1)\",\"cha\":\"11 (+0)\",\"abilities\":\"Pattern recognition; archival intuition; unhelpful sarcasm\",\"inventory\":\"Notebook, annotated map, brass key\",\"equipment\":\"Pocket lantern and violet field kit\",\"effects\":\"Focused; under deadline\",\"notes\":\"Advancement: 0/3 milestones; 1 unspent boost. Level gained and reward unallocated.\",\"change\":\"Level up: the archive chapter concluded.\",\"resolved\":\"Recovered the brass key\",\"die\":\"d20\",\"raw\":\"12\",\"modifier\":\"+3\",\"total\":\"15\",\"dc\":\"14\",\"check\":\"Investigation\",\"stakes\":\"Open the cabinet without alarming the archivist\"}\n<!-- KL_DM_END -->",
+          "gabi": "Gabi has one unspent attribute boost. The native reward selector appears."
+        },
+        {
+          "id": "compact",
+          "label": "Compact sheet",
+          "input": "<!-- KL_DM_START -->\n{\"id\":\"dm24681012\",\"presentation\":\"compact\",\"sheet\":\"on\",\"expression\":\"smug\",\"location\":\"Archive undercroft\",\"time\":\"Day 3 · Night watch\",\"situation\":\"The seal is weakening and the library is closing\",\"goal\":\"Recover the index before the doors are barred\",\"dm\":\"Gabi: You can make progress without pretending every locked door is a boss battle.\",\"name\":\"Gabrielle\",\"identity\":\"Level 3 Archivist · investigator\",\"hp\":\"23 / 27\",\"defense\":\"14\",\"level\":\"3\",\"str\":\"10 (+0)\",\"dex\":\"14 (+2)\",\"con\":\"12 (+1)\",\"int\":\"16 (+3)\",\"wis\":\"13 (+1)\",\"cha\":\"11 (+0)\",\"abilities\":\"Pattern recognition; archival intuition; unhelpful sarcasm\",\"inventory\":\"Notebook, annotated map, brass key\",\"equipment\":\"Pocket lantern and violet field kit\",\"effects\":\"Focused; under deadline\",\"notes\":\"Advancement: 0/3 milestones; 0 unspent boosts. Gabi is pleased with the map.\",\"change\":\"Completed the route without alarms.\",\"resolved\":\"Recovered the brass key\",\"die\":\"d20\",\"raw\":\"12\",\"modifier\":\"+3\",\"total\":\"15\",\"dc\":\"14\",\"check\":\"Investigation\",\"stakes\":\"Open the cabinet without alarming the archivist\"}\n<!-- KL_DM_END -->",
+          "gabi": "Gabi switches the same campaign data into its compact presentation."
+        }
+      ],
+      "scriptContracts": {
+        "🎲 [DM] 00 Pending attribute reward · clickable allocation": {
+          "pattern": "84599696",
+          "replacement": "c766c6ae"
+        },
+        "🎲 [DM] 00 Earned objective · compact progress ribbon": {
+          "pattern": "a243a419",
+          "replacement": "94409ecb"
+        },
+        "🎲 [DM] 01 Console & character sheet": {
+          "pattern": "32897efa",
+          "replacement": "5a36f146"
+        }
+      }
+    },
+    {
+      "id": "social-studio",
+      "platform": "lumi",
+      "name": "Social worlds",
+      "category": "Social",
+      "kicker": "FIVE REAL SOCIAL SURFACES",
+      "description": "Five independent native presentations share one slot. Switch the destination to run its original source regex sequence.",
+      "notes": "Native source HTML; site-specific or host-only interactions are disabled in this sandbox.",
+      "scriptNames": [],
+      "requiredMatches": [],
+      "variants": [
+        {
+          "id": "classic-timeline",
+          "label": "Twitter",
+          "input": "<!-- TW_START -->\n[twpost][author]Gabrielle[/author][handle]@gabrielle_dev[/handle][time]14:20[/time][text]Today’s lesson: archives have version control problems, too. The missing index has two conflicting revisions.[/text][reply_count]3[/reply_count][retweet_count]8[/retweet_count][like_count]46[/like_count][replies][twreply][author]Mara[/author][handle]@mara_notes[/handle][time]14:23[/time][text]Found the original ink timestamp. It is older than the index.[/text][/twreply][/replies][/twpost]\n<!-- TW_END -->",
+          "gabi": "Gabi’s original thread is nested through three visual regex replacements.",
+          "scriptNames": [
+            "🌐[SOCIAL V2 / TWITTER CLASSIC] 01 Conversation Replies",
+            "🌐[SOCIAL V2 / TWITTER CLASSIC] 03 Standalone Tweet + Media",
+            "🌐[SOCIAL V2  / TWITTER CLASSIC] 05 Optional Desktop Shell"
+          ],
+          "scriptContracts": {
+            "🌐[SOCIAL V2 / TWITTER CLASSIC] 01 Conversation Replies": {
+              "pattern": "875eff87",
+              "replacement": "b48b12de"
+            },
+            "🌐[SOCIAL V2 / TWITTER CLASSIC] 03 Standalone Tweet + Media": {
+              "pattern": "d85837cf",
+              "replacement": "a9725875"
+            },
+            "🌐[SOCIAL V2  / TWITTER CLASSIC] 05 Optional Desktop Shell": {
+              "pattern": "1c5e90fb",
+              "replacement": "0a11cecd"
+            }
+          },
+          "requiredMatches": [
+            "🌐[SOCIAL V2 / TWITTER CLASSIC] 01 Conversation Replies",
+            "🌐[SOCIAL V2 / TWITTER CLASSIC] 03 Standalone Tweet + Media",
+            "🌐[SOCIAL V2  / TWITTER CLASSIC] 05 Optional Desktop Shell"
+          ],
+          "previewKind": "classic-timeline"
+        },
+        {
+          "id": "tumblr-dashboard",
+          "label": "Tumblr",
+          "input": "<!-- TUMBLR_DESKTOP_START -->\n[tbpost][author]gabi-archives[/author][time]Last night[/time][title]the index situation[/title][text]A catalog is a memory system. Apparently ours has decided to become an unreliable narrator. Here are the clues we can actually prove.[/text][tags]#library #archive #mystery[/tags][notes_count]39[/notes_count][/tbpost]\n<!-- TUMBLR_DESKTOP_END -->",
+          "gabi": "Gabi’s post flows through the native Tumblr dashboard renderer.",
+          "scriptNames": [
+            "🌐[SOCIAL V2 / TUMBLR] 04 Standalone Post + Media",
+            "🌐[SOCIAL V3 / TUMBLR] 07 Optional Desktop Dashboard"
+          ],
+          "scriptContracts": {
+            "🌐[SOCIAL V2 / TUMBLR] 04 Standalone Post + Media": {
+              "pattern": "13e75edd",
+              "replacement": "421865d5"
+            },
+            "🌐[SOCIAL V3 / TUMBLR] 07 Optional Desktop Dashboard": {
+              "pattern": "4f95c48f",
+              "replacement": "e990c6e3"
+            }
+          },
+          "requiredMatches": [
+            "🌐[SOCIAL V2 / TUMBLR] 04 Standalone Post + Media",
+            "🌐[SOCIAL V3 / TUMBLR] 07 Optional Desktop Dashboard"
+          ],
+          "previewKind": "tumblr-dashboard"
+        },
+        {
+          "id": "instagram-feed",
+          "label": "Instagram",
+          "input": "<!-- IG_START -->\n[igfeed][title]Gabrielle’s archive[/title][profile]Gabrielle[/profile][handle]@gabi.codes[/handle][bio]A little corner for case files and crooked library maps[/bio][stats]24 posts · 1,208 followers[/stats][/igfeed]\n[igpost][author]Gabrielle[/author][handle]@gabi.codes[/handle][time]Today[/time][location]The archive[/location][media_url][/media_url][media_alt]An annotated notebook[/media_alt][caption]Found three catalog versions and not one agrees about the missing index.[/caption][likes]82[/likes][comments]5[/comments][/igpost]\n<!-- IG_END -->",
+          "gabi": "Gabi’s profile is a separate shell, not a hardcoded card template.",
+          "scriptNames": [
+            "🌐[SOCIAL V2 / INSTAGRAM] 01 Feed Post + Media Slot",
+            "🌐[SOCIAL V2 / INSTAGRAM] 03 Optional Feed Shell"
+          ],
+          "scriptContracts": {
+            "🌐[SOCIAL V2 / INSTAGRAM] 01 Feed Post + Media Slot": {
+              "pattern": "e9b708d6",
+              "replacement": "81c76fd2"
+            },
+            "🌐[SOCIAL V2 / INSTAGRAM] 03 Optional Feed Shell": {
+              "pattern": "1ae427cc",
+              "replacement": "9fec9f11"
+            }
+          },
+          "requiredMatches": [
+            "🌐[SOCIAL V2 / INSTAGRAM] 01 Feed Post + Media Slot",
+            "🌐[SOCIAL V2 / INSTAGRAM] 03 Optional Feed Shell"
+          ],
+          "previewKind": "instagram-feed"
+        },
+        {
+          "id": "twitch-desktop",
+          "label": "Twitch",
+          "input": "<!-- TWITCH_START -->\n[twitch][channel]GabrielleAfterHours[/channel][title]Restoring a mysterious archive index without losing the plot[/title][category]Creative / Archive Detectives[/category][viewers]2,481[/viewers][time]Live · 22:40[/time][chat][twitchchat][time]22:41[/time][author]Gabi[/author][color]#bca2ed[/color][text]Reminder: the missing index is evidence, not an excuse to narrate three flashbacks.[/text][/twitchchat][twitchchat][time]22:42[/time][author]Mara[/author][text]Chat found the key number on the back of the card.[/text][/twitchchat][/chat][/twitch]\n<!-- TWITCH_END -->",
+          "gabi": "Gabi hosts the stream while nested chat messages become real native stream UI.",
+          "scriptNames": [
+            "🌐[SOCIAL V2  / TWITCH] 01 Chat Message",
+            "🌐[SOCIAL V2 / TWITCH] 03 PC Player + Chat (Default)",
+            "🌐[SOCIAL V2 / TWITCH] 04 Optional Full Desktop Shell"
+          ],
+          "scriptContracts": {
+            "🌐[SOCIAL V2  / TWITCH] 01 Chat Message": {
+              "pattern": "32a409ff",
+              "replacement": "2a5ad5cb"
+            },
+            "🌐[SOCIAL V2 / TWITCH] 03 PC Player + Chat (Default)": {
+              "pattern": "219552b1",
+              "replacement": "f70e8fc7"
+            },
+            "🌐[SOCIAL V2 / TWITCH] 04 Optional Full Desktop Shell": {
+              "pattern": "56bf1ddc",
+              "replacement": "4b570aa6"
+            }
+          },
+          "requiredMatches": [
+            "🌐[SOCIAL V2  / TWITCH] 01 Chat Message",
+            "🌐[SOCIAL V2 / TWITCH] 03 PC Player + Chat (Default)",
+            "🌐[SOCIAL V2 / TWITCH] 04 Optional Full Desktop Shell"
+          ],
+          "previewKind": "twitch-desktop"
+        },
+        {
+          "id": "imessage",
+          "label": "iMessage",
+          "previewKind": "imessage-phone",
+          "scriptNames": [
+            "🌐[SOCIAL V2 / PHONE] 01 Messages + Attachment Slot",
+            "🌐[SOCIAL V2 / PHONE] 02 Typing Indicator",
+            "🌐[SOCIAL V2 / PHONE] 03 Optional Phone Shell",
+            "🌐[SOCIAL V2 / PHONE] 04 Interactive Quick Replies"
+          ],
+          "requiredMatches": [
+            "🌐[SOCIAL V2 / PHONE] 03 Optional Phone Shell"
+          ],
+          "input": "<!-- PHONE_MESSAGES_START -->\n[phone][contact]Kitty / Diagnostics Bay[/contact][subtitle]The bridge incident[/subtitle][device_time]03:14[/device_time][carrier]KittyNet[/carrier][battery]47[/battery][/phone]\n[imsg][contact]Kitty[/contact][side]incoming[/side][time]03:14[/time][text]The rollback woke up the third bug. Facility lighting is now part of the sandbox. Don't tell Gabi.[/text][/imsg]\n[imsg][contact]Zephyr[/contact][side]outgoing[/side][time]03:14[/time][text]Too late. He stole my security keycard while being carried out.[/text][status]Delivered[/status][/imsg]\n[ityping][contact]Kitty[/contact][/ityping]\n[imreplies]\n1 | Lock down the lift\n2 | Isolate the corridor\n3 | Do not give him a keyboard\n[/imreplies]\n<!-- PHONE_MESSAGES_END -->",
+          "gabi": "Gabi: Kitty tried to route the facility meltdown through a text thread. The original phone shell, message bubbles, typing indicator, and suggested replies render in native order.",
+          "scriptContracts": {
+            "🌐[SOCIAL V2 / PHONE] 01 Messages + Attachment Slot": {
+              "pattern": "2415261c",
+              "replacement": "8a988216"
+            },
+            "🌐[SOCIAL V2 / PHONE] 02 Typing Indicator": {
+              "pattern": "7f29f43c",
+              "replacement": "4de8da69"
+            },
+            "🌐[SOCIAL V2 / PHONE] 03 Optional Phone Shell": {
+              "pattern": "b3c132c4",
+              "replacement": "a6d81c3c"
+            },
+            "🌐[SOCIAL V2 / PHONE] 04 Interactive Quick Replies": {
+              "pattern": "2eff3654",
+              "replacement": "c61988a2"
+            }
+          }
+        }
+      ],
+      "scriptContracts": {}
+    },
+    {
+      "id": "cyoa-multi",
+      "platform": "lumi",
+      "name": "CYOA Multi: character routes",
+      "category": "Campaign",
+      "kicker": "TWO-ACTOR BRANCHING",
+      "description": "One branching packet opens the original multi-character route chooser; host send actions remain disabled in the sandbox.",
+      "notes": "Native CYOA Multi source HTML. The preview opens the popover statically for inspection; host macro expansion, route submission, and external actions remain disabled.",
+      "scriptNames": [
+        "🧩 [CYOA] Multi · Modal"
+      ],
+      "requiredMatches": [
+        "🧩 [CYOA] Multi · Modal"
+      ],
+      "variants": [
+        {
+          "id": "containment",
+          "label": "Containment choices",
+          "input": "<!-- MULTI_BRANCH_UI_START -->\n<branch-multi>\ncount | 2\nprompt | The corridor lights turn crimson and the residential lift jams. Who takes the next risk?\n<actor>\nGabrielle | Injured engineer\n1 | @override | Reach the manual bridge override | May worsen the current clamp\n2 | @confess | Tell Zephyr about the stolen keycard | Admits another bad decision\n3 | @guide-kitty | Guide Kitty through a clean rollback | Must stop fighting and cooperate\n</actor>\n<actor>\nZephyr | Security and containment\n1 | @seal-lift | Seal the residential lift | Cuts off the fastest exit\n2 | @protect-gabi | Carry Gabrielle to medical | Leaves Kitty running containment\n3 | @handoff | Return the stolen keycard to Kitty | Must trust her sandbox\n</actor>\n</branch-multi>\n<!-- MULTI_BRANCH_UI_END -->",
+          "gabi": "Gabi: Zephyr can secure the lift while I decide whether to confess about the keycard. Two characters, three routes each, one native branching prompt."
+        }
+      ],
+      "scriptContracts": {
+        "🧩 [CYOA] Multi · Modal": {
+          "pattern": "a99a7cc1",
+          "replacement": "d9e83f35"
+        }
+      }
+    }
+  ]
+}

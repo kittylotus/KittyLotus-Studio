@@ -1,0 +1,80 @@
+/* v0.9 · Constellation reference tokens: original standalone style guide. */
+:root{--bg:#030305;--panel:#07070b;--control:#0d0b15;--hover:#171222;--text:#f4f2f7;--muted:#9891a6;--line:rgba(145,112,239,.16);--accent:#6548db;--cyan:#70ddff;--cut:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+html,body,.app-shell,.app-body{background:#030305}
+.app-body:before{opacity:.08}
+.sidebar{background:linear-gradient(180deg,#0c0916, #030305 80%)}
+.context-rail,.topbar{background:#07070b;border-color:var(--line)}
+.panel,.native-tools,.dossier-tools,.repo-browser{background:var(--panel);border-color:var(--line)}
+.button-primary,.button-primary:hover{background:#6548db;border-color:#8069e6}
+.button-outline,.button-quiet,.field-input,.code-textarea,select{background-color:var(--control);border-color:#382d4c;color:var(--text)}
+.button-quiet:hover,.button-outline:hover{background:var(--hover)}
+.pill-soft{background:#171222;border-color:var(--line);color:#b8a6dd}
+.skin-viewer,.skin-operator,.skin-native-editor,.regex-editor,.regex-tester,.regex-output,.regex-picker{background:var(--panel)}
+.skin-viewer .preview-head,.skin-operator .panel-heading,.skin-native-editor>.panel-heading{background:var(--control)}
+.skin-token-group{border-color:var(--line);border-radius:5px;background:#08070d}
+.skin-token-group>summary,.skin-operator .skin-native-editor>.panel-heading{background:#100e17}
+.skin-token-card{background:#0b0911;border-color:var(--line);border-radius:6px}
+/* The checkbox still owns keyboard and native accessibility; only its paint becomes a switch. */
+#main input[type=checkbox],#view-architect .native-input input[type=checkbox],#view-architect .st-prompt-row input[type=checkbox]{box-sizing:border-box!important;flex:none!important;flex-basis:auto!important;inline-size:37px!important;block-size:21px!important;width:37px!important;height:21px!important;min-width:37px!important;min-height:21px!important;max-height:21px!important;align-self:center!important;border-radius:11px!important}
+#main input[type=checkbox]:checked{background:#6548db!important;border-color:#9078f0!important}
+/* Round swatches, including Chromium's inner color well. */
+#view-skins .skin-color-inputs>.skin-color{appearance:none;-webkit-appearance:none;width:32px;height:32px;min-width:32px;flex:0 0 32px;padding:2px;border-radius:50%!important;overflow:hidden;border:1px solid #9170ef;background:transparent;cursor:pointer}
+#view-skins .skin-color::-webkit-color-swatch-wrapper{padding:0;border-radius:50%;overflow:hidden}
+#view-skins .skin-color::-webkit-color-swatch{border:0;border-radius:50%}
+#view-skins .skin-color::-moz-color-swatch{border:0;border-radius:50%}
+#view-skins .skin-color:focus-visible{outline:2px solid #70ddff;outline-offset:3px}
+/* Compact area-picker workflow: display only live relevant native tokens. */
+.skin-part-tools{padding:12px 13px 11px;display:grid;gap:7px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,#0e0b18,#09080e)}
+.skin-part-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.skin-part-top label{color:#f4f2f7;font:650 11px/1.4 Inter,system-ui,sans-serif}
+.skin-part-tools select{width:100%;min-height:36px;font-size:12px}
+.skin-part-tools p{margin:0;color:#9891a6;font-size:10px;line-height:1.5}
+.skin-part-count{color:#aa91ed;font:10px/1.5 ui-monospace,Consolas,monospace}
+#skinPickPreview{padding:7px 10px;font-size:10px;min-width:0;white-space:nowrap}
+#skinPickPreview[aria-pressed=true]{color:#70ddff;border-color:#70ddff;background:#11202a;box-shadow:inset 2px 0 #70ddff}
+.skin-operator .skin-dossier-tools{padding:10px 12px 9px;gap:6px}
+.skin-operator .skin-dossier-tools label{font-size:10px}
+.skin-operator .skin-token-grid{gap:4px;padding:6px}
+.skin-operator .skin-token-group{margin:5px 8px 6px;border-radius:5px}
+.skin-token-group>summary{min-height:30px;padding:6px 10px;font-size:11px}
+.skin-token-card{gap:5px;padding:9px 10px 8px}
+.skin-token-identity{gap:2px}
+.skin-token-identity strong{font-size:11px}
+.skin-token-identity>span{font-size:9px;line-height:1.35}
+.skin-token-controls{gap:5px}
+.skin-color-control{gap:3px}
+.skin-color-inputs{gap:9px}
+.skin-part-label{font-size:9px}
+.skin-token-raw{padding-top:6px}
+.skin-token-raw summary{font-size:9px}
+.skin-operator .skin-native-editor>.panel-heading{padding:10px 12px 8px}
+.skin-operator .skin-native-editor>.panel-heading p{font-size:9px;line-height:1.45}
+.skin-operator .skin-dossier-grid .muted-tiny{padding:7px 12px}
+/* Let the user tune without the preview or control panel changing location. */
+.skin-operator{scrollbar-color:#45355d #07070b;overscroll-behavior:contain}
+.skin-viewer{top:62px}
+@media(max-width:980px){.skin-viewer{top:auto}.skin-operator{max-height:none}}
+@media(max-width:570px){.skin-part-top{flex-wrap:wrap}.skin-part-top label{flex:1}.skin-part-tools{padding:11px}}
+
+/* Save/activate remain reachable without scrolling away from a color being tuned. */
+.skin-quick-actions{position:sticky;top:0;z-index:15;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:7px 10px;background:#0d0b15;border-block:1px solid var(--line);box-shadow:0 5px 12px #0008}
+.skin-quick-actions .button{min-width:0;padding:7px 5px;font-size:10px}
+.skin-quick-status{grid-column:1/-1;font:9px/1.25 ui-monospace,Consolas,monospace;color:#aa91ed;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+@media(max-width:980px){.skin-quick-actions{position:static}}
+
+/* The source manager is deliberately collapsed; the editing target is first contact. */
+.skin-manage-details{border-bottom:1px solid var(--line);background:#08070e}
+.skin-manage-details>summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:35px;padding:8px 12px;color:#b8a6dd;font-size:10px;list-style:none}
+.skin-manage-details>summary::-webkit-details-marker{display:none}
+.skin-manage-details>summary:before{content:'›';font:700 17px/1 monospace;color:#9170ef}
+.skin-manage-details[open]>summary:before{transform:rotate(90deg)}
+.skin-manage-details>summary strong{margin-left:auto;color:#f4f2f7;font-size:10px;font-weight:650}
+.skin-manage-details>.panel-heading{background:#0d0b15;padding:10px 12px;border-block:1px solid var(--line)}
+.skin-manage-details>.panel-heading h3{font-size:13px}
+.skin-manage-details>.panel-heading p{font-size:10px}
+.skin-manage-details>.panel-heading .pill{font-size:9px}
+.skin-renderer-info>summary{font-size:10px;color:#9285a6;padding:9px 12px}
+.skin-renderer-info>.skin-field{border-top:0;padding:8px 12px}
+.skin-operator .skin-native-editor{margin:0}
+.skin-operator .skin-part-tools{border-top:0;padding:12px 12px}
+.skin-operator .skin-quick-actions{top:0}

@@ -1,0 +1,34 @@
+{
+  "generatedOn": "2026-11-22",
+  "sourceRepository": "https://github.com/kittylotus/KittyLotus-Multimodal",
+  "policy": "uploaded working snapshots; GitHub updates require explicit opt-in and schema/fixture audit",
+  "snapshotFiles": {
+    "lumiverse.json": {
+      "sha256": "e7c77f3b2d651f6983e10923b2167d663df78cd2af6ead70aa0238f41d3d7a99",
+      "bytes": 4486559
+    },
+    "sillytavern.json": {
+      "sha256": "cc6359e32b793f96641df83fb410d953508865cf34b2e8d9db4d91b29f1faf18",
+      "bytes": 561709
+    },
+    "janitor-impersonation.txt": {
+      "sha256": "12930b2db75a059db59371f0b5e9c2b162af0197091120650b4b8e118634751f",
+      "bytes": 17885
+    },
+    "janitor-reserved-agency.txt": {
+      "sha256": "bbbba8ee17c18dde57c447a3bba7ea7286a82c6f9ba9461811fb3bbeb39fd4d9",
+      "bytes": 17239
+    }
+  },
+  "lumiverseSummary": {
+    "blocks": 159,
+    "controls": 117,
+    "regexScripts": 220,
+    "fixtureCount": 7
+  },
+  "fixtureCountByPlatform": {
+    "lumiverse": 7,
+    "sillytavern": 1,
+    "total": 8
+  }
+}
