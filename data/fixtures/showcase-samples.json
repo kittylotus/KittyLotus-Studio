@@ -218,7 +218,7 @@
       "kind": "Relationship pacing",
       "scriptName": "🧩 [DECORATIONS] Slowburn Engine",
       "patternFingerprint": "2f0f279b",
-      "input": "{\"h\":\"2\",\"s\":\"4\",\"r\":\"12\",\"c\":\"Gabrielle suspects the workshop has a visitor.\",\"l\":\"Trust advances one careful answer at a time.\"}",
+      "input": "{\"h\":\"2\",\"s\":\"4\",\"r\":\"12\",\"c\":\"Gabrielle suspects the corridor has a fault.\",\"l\":\"Trust advances one careful answer at a time.\"}",
       "notes": "Verified against the bundled Lumiverse relationship pacing regex. Original replacement HTML; host interactions are not simulated.",
       "showcase": true,
       "scriptContracts": {
@@ -236,7 +236,7 @@
       "kind": "Chapter framing",
       "scriptName": "🧩 [WEBNOVEL]  Pretty Titles",
       "patternFingerprint": "73bfbfb6",
-      "input": "<chap>Chapter 07|The Unfinished Index</chap>",
+      "input": "<chap>Chapter 07|The Third Fault</chap>",
       "notes": "Verified against the bundled Lumiverse chapter framing regex. Original replacement HTML; host interactions are not simulated.",
       "showcase": true,
       "scriptContracts": {
@@ -254,7 +254,7 @@
       "kind": "Character overlay",
       "scriptName": "🧩 [Gabi]  — GabiBox",
       "patternFingerprint": "7940e38c",
-      "input": "{\"dot_color\":\"#70ddff\",\"badge_color_start\":\"#6548db\",\"badge_color_end\":\"#352268\",\"badge_text\":\"GABRIELLE\",\"content_template\":\"The archive is behaving. Suspiciously.\",\"status\":\"STANDBY\"}",
+      "input": "{\"dot_color\":\"#70ddff\",\"badge_color_start\":\"#6548db\",\"badge_color_end\":\"#352268\",\"badge_text\":\"GABRIELLE\",\"content_template\":\"The diagnostic bay is behaving. Suspiciously.\",\"status\":\"STANDBY\"}",
       "notes": "Verified against the bundled SillyTavern character overlay regex. Original replacement HTML; host interactions are not simulated.",
       "showcase": true,
       "scriptContracts": {
@@ -272,7 +272,7 @@
       "kind": "Chapter framing",
       "scriptName": "🧩 [WEBNOVEL] — Pretty Titles",
       "patternFingerprint": "96b6b819",
-      "input": "<chap>Chapter 07|The Unfinished Index</chap>",
+      "input": "<chap>Chapter 07|The Third Fault</chap>",
       "notes": "Verified against the bundled SillyTavern chapter framing regex. Original replacement HTML; host interactions are not simulated.",
       "showcase": true,
       "scriptContracts": {
@@ -290,7 +290,7 @@
       "kind": "Scene environment",
       "scriptName": "🧩 [DECOR] — Weather Header",
       "patternFingerprint": "e0d49a69",
-      "input": "[weather_header]style=rain_night time=19:10 location=Gabrielle’s archive condition=Rain img_url= img_alt=Rain against the glass[/weather_header]",
+      "input": "[weather_header]style=rain_night time=19:10 location=Gabrielle’s diagnostic bay condition=Rain img_url= img_alt=Rain against the glass[/weather_header]",
       "notes": "Verified against the bundled SillyTavern scene environment regex. Original replacement HTML; host interactions are not simulated.",
       "showcase": true,
       "scriptContracts": {

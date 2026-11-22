@@ -13,13 +13,13 @@ from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
 MODULES=['native.js','core.js','catalog.js','skin-controls.js','workbench.js','showcase.js','showcase-ui.js','cascade.js','cascade-showcase.js','app.js']
-CSS=['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css']
+CSS=['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css','mobile-compact.css']
 FIXTURES=['data/native/lumiverse.json','data/native/sillytavern.json','data/native/janitor-reserved-agency.txt','data/native/janitor-impersonation.txt','data/fixtures/contract-fixtures.json','data/fixtures/showcase-samples.json','data/fixtures/showcase-snapshots.json','data/fixtures/cascade-samples.json']
 
 def run():
     html=(ROOT/'index.html').read_text(encoding='utf-8')
     for name in CSS:html=html.replace(f'<link href="./css/{name}" rel="stylesheet"/>','')
-    html=html.replace('<script src="./js/app.js" type="module"></script>','')
+    html=html.replace('<script src="./js/app.js?v=0.16.0" type="module"></script>','')
     html=html.replace('</head>','<style>'+'\n'.join((ROOT/'css'/name).read_text(encoding='utf-8') for name in CSS)+'</style></head>')
     image='data:image/webp;base64,'+b64encode((ROOT/'assets/gabi/gabi-views.webp').read_bytes()).decode()
     html=html.replace('src="./assets/gabi/gabi-views.webp"',f'src="{image}"')

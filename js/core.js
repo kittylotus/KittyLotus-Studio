@@ -74,7 +74,19 @@ export function transformRegex(input,scripts,options={}){
  const maxOutput=options?.curatedCascade===true?260000:150000;
  let output=input;const log=[];
  for(const script of scripts){if(script.disabled)continue;
-  try {const regex=compileSourceRegex(script.findRegex,script.flags);const start=output;output=output.replace(regex,script.replaceString);if(output.length>maxOutput)throw new Error(`Output exceeds ${maxOutput.toLocaleString()} characters.`);log.push({script:script.scriptName,changed:output!==start});}
+  try {const regex=compileSourceRegex(script.findRegex,script.flags);const start=output;output=output.replace(regex,script.replaceString);
+   // Lumiverse expands random IDs before its next regex. Simulate ONLY the generated
+   // 32-digit CYOA Multi popover marker in source-verified, display-only demos.
+   // Never substitute macros in arbitrary preview content or user-authored source.
+   if(options?.curatedCascade===true && options?.previewHostPopoverId===true && script.scriptName==='🧩 [CYOA] Multi · Popover ID'){
+    const marker=/<!--<gabi-fcm-popout-id>((?:\{\{random::[0-9a-f:]+\}\}){32})<\/gabi-fcm-popout-id>-->/g;
+    const fixedId='2468ace02468ace02468ace02468ace0';
+    output=output.replace(marker,(whole,macros)=>{
+     const components=macros.match(/\{\{random::[0-9a-f:]+\}\}/g)||[];
+     return components.length===32?whole.replace(macros,fixedId):whole;
+    });
+   }
+   if(output.length>maxOutput)throw new Error(`Output exceeds ${maxOutput.toLocaleString()} characters.`);log.push({script:script.scriptName,changed:output!==start});}
   catch(e){throw new Error(`${script.scriptName}: ${e.message}`);}
  }
  return {output,log};

@@ -24,7 +24,7 @@ test('every cascade variant executes only its exact source rules and the expecte
   for(const variant of scene.variants){
    const effective={...scene,scriptNames:variant.scriptNames||scene.scriptNames,scriptContracts:variant.scriptContracts||scene.scriptContracts,requiredMatches:variant.requiredMatches||scene.requiredMatches};
    const plan=resolveCascadePlan(source,effective);assert.equal(plan.ok,true,`${scene.id}/${variant.id}: ${plan.reason}`);
-   const output=transformRegex(variant.input,plan.scripts,{curatedCascade:true});
+   const output=transformRegex(variant.input,plan.scripts,{curatedCascade:true,previewHostPopoverId:effective.previewHostPopoverId===true});
    const summary=describeCascadeExecution(effective,variant,output.log);
    assert.ok(summary.complete,`${scene.id}/${variant.id}: ${summary.missing.join(', ')}`);
    assert.ok(summary.matched>=1,`${scene.id}/${variant.id}`);
@@ -45,10 +45,38 @@ test('social carousel uses five distinct verified native pipelines, including fu
 });
 test('CYOA Multi packet builds the real branching dialog with two actors and six routes',()=>{
  const s=data.cascades.find(x=>x.id==='cyoa-multi'),v=s.variants[0],plan=resolveCascadePlan(source,s);
- assert.equal(plan.ok,true);const out=transformRegex(v.input,plan.scripts,{curatedCascade:true});
- assert.equal(out.log.filter(x=>x.changed).length,1);assert.match(out.output,/gabi-fcm-launch/);
+ assert.equal(plan.ok,true);const out=transformRegex(v.input,plan.scripts,{curatedCascade:true,previewHostPopoverId:true});
+ assert.equal(out.log.filter(x=>x.changed).length,3,'Modal, Popover ID and Wiring all match');
+ assert.deepEqual(out.log.map(x=>x.script),s.scriptNames);
+ assert.match(out.output,/class="gabi-fcm-launch gabi-cyoa-launch"/);
+ assert.match(out.output,/popovertarget="gabi-fcm-2468ace02468ace02468ace02468ace0"/);
+ assert.match(out.output,/id="gabi-fcm-2468ace02468ace02468ace02468ace0"/);
+ assert.doesNotMatch(out.output,/\{\{random::/);
+ assert.ok(v.input.includes('The corridor lights turn crimson'),'Gabi fixture retained intact');
  assert.match(out.output,/Gabrielle/);assert.match(out.output,/Zephyr/);
- for(const tag of ['override','confess','guide-kitty','seal-lift','protect-gabi','handoff'])assert.ok(out.output.includes(tag),tag);
+ for(const tag of ['risk','reveal','assist','tactical','protect','social'])assert.match(out.output,new RegExp(`data-tag=\"${tag}\"`),tag);
+});
+
+test('CYOA route tags use original SVG mask vocabulary rather than unstyled placeholders',()=>{
+ const s=data.cascades.find(x=>x.id==='cyoa-multi'),v=s.variants[0];
+ const sourceTags=new Set([...source.find(x=>x.scriptName==='🧩 [CYOA] Multi · Modal').replaceString.matchAll(/\.gabi-cyoa-route\[data-tag="([^"]+)"\]/g)].map(m=>m[1]));
+ for(const tag of [...v.input.matchAll(/\|\s*@([a-z-]+)\s*\|/g)].map(m=>m[1]))assert.ok(sourceTags.has(tag),`No SVG CSS for ${tag}`);
+ assert.equal([...v.input.matchAll(/\|\s*@([a-z-]+)\s*\|/g)].length,6);
+});
+test('CYOA host macro emulation is opt-in and never changes arbitrary regex previews',()=>{
+ const s=data.cascades.find(x=>x.id==='cyoa-multi'),v=s.variants[0],plan=resolveCascadePlan(source,s);
+ const noHost=transformRegex(v.input,plan.scripts,{curatedCascade:true});
+ assert.equal(noHost.log.filter(x=>x.changed).length,2);
+ assert.match(noHost.output,/\{\{random::/);
+ assert.doesNotMatch(noHost.output,/id="gabi-fcm-2468ace02468ace02468ace02468ace0"/);
+ const onlyMacro=transformRegex('<!--<gabi-fcm-popout-id>{{random::0::1}}</gabi-fcm-popout-id>-->',[],{curatedCascade:true,previewHostPopoverId:true});
+ assert.match(onlyMacro.output,/\{\{random::0::1\}\}/);
+});
+test('curated scenes contain no leftover Mara, archivist or library-index placeholders',()=>{
+ for(const scene of data.cascades)for(const variant of scene.variants){
+  assert.doesNotMatch(variant.input,/\bMara\b|archivist|library index|missing index/i,`${scene.id}/${variant.id}`);
+  assert.match(variant.gabi,/Gabi/i,`${scene.id}/${variant.id}`);
+ }
 });
 test('entire eight-module tracker runs 17 native rule matches and retains eight pages',()=>{
  const scene=data.cascades[0],plan=resolveCascadePlan(source,scene);

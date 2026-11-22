@@ -12,6 +12,6 @@
 
 /* Weather is a short native header; avoid wasting a whole viewport beneath 170px of content. */
 .cascade-stage[data-cascade="weather-system"] iframe{height:305px}
-.cascade-stage[data-cascade="cyoa-multi"] iframe{height:420px}
+.cascade-stage[data-cascade="cyoa-multi"] iframe{height:680px}
 .cascade-stage[data-cascade="imessage-phone"] iframe{height:640px}
-@media(max-width:670px){.cascade-stage[data-cascade="weather-system"] iframe{height:245px}.cascade-stage[data-cascade="imessage-phone"] iframe{height:560px}.cascade-expand span{display:none}}
+@media(max-width:670px){.cascade-stage[data-cascade="weather-system"] iframe{height:245px}.cascade-stage[data-cascade="imessage-phone"] iframe{height:560px}.cascade-stage[data-cascade="cyoa-multi"] iframe{height:580px}.cascade-expand span{display:none}}

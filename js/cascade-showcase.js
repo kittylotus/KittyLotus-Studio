@@ -5,16 +5,20 @@ function el(tag,cls,content){const value=document.createElement(tag);if(cls)valu
 const symbols={Trackers:'◈',Environment:'☼',Campaign:'✦',Social:'◌',Websites:'▣'};
 const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-/** Weather photos remain their canonical source URLs. Only original native source images are permitted. */
+/** Native weather and CYOA artwork keep canonical source URLs; all previews disallow scripts. */
 function trustedPreviewDocument(output,scene){
- const trustedWeather=scene.id==='weather-system';
- const imagePolicy=trustedWeather?'img-src data: https://github.com https://raw.githubusercontent.com;':'img-src data:;';
- // The host normally expands macro-generated IDs and opens the CYOA popover.
- // This display-only adapter changes only popover visibility, never the native choices or their labels.
+ const trustedArtwork=scene.id==='weather-system'||scene.id==='cyoa-multi';
+ const imagePolicy=trustedArtwork?'img-src data: https://github.com https://raw.githubusercontent.com;':'img-src data:;';
+ // Native CYOA already has a declarative popover dock and <details> actor chooser.
+ // Keep them intact. No scripts, choice submission, or synthetic interaction layer is needed.
+ // Only the verified generated ID is substituted upstream (in core.js) for the sandbox.
  const cyoa=scene.id==='cyoa-multi';
- const displayed=cyoa?output.replace('popover="auto" class="gabi-fcm-pop gabi-cyoa-pop"','data-preview-expanded="true" class="gabi-fcm-pop gabi-cyoa-pop"').replace('<details class="gabi-fcm-actor','<details open class="gabi-fcm-actor'):output;
- const previewCss=cyoa?'.gabi-fcm-launch{display:none!important}.gabi-fcm-pop[data-preview-expanded]{display:block!important;position:relative!important;inset:auto!important;top:auto!important;left:auto!important;right:auto!important;margin:0 auto!important;transform:none!important;max-width:min(100%,760px)!important;max-height:none!important;opacity:1!important;visibility:visible!important}':' ';
- return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; ${imagePolicy} script-src 'none'; connect-src 'none'; font-src 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#060509;color:#f4f2f7;font:14px/1.6 system-ui,sans-serif;overflow-wrap:anywhere}body{padding:clamp(12px,2.5vw,24px)}img{max-width:100%}${previewCss}</style></head><body>${displayed}</body></html>`;
+ const compactCss=cyoa?'':'@media(max-width:650px){html{zoom:.90}}';
+ const previewCss=cyoa?`body:has(.gabi-cyoa-launch){min-height:100dvh;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 44%,rgba(70,48,104,.2),transparent 66%),#030305}
+ .gabi-cyoa-launch{position:relative;z-index:1}
+ .gabi-cyoa-launch:focus-visible,.gabi-fcm-actor>summary:focus-visible,.gabi-cyoa-close:focus-visible{outline:2px solid #70ddff;outline-offset:4px}
+ @media(max-width:650px){body:has(.gabi-cyoa-launch){padding:10px}}`:'';
+ return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; ${imagePolicy} script-src 'none'; connect-src 'none'; font-src 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#060509;color:#f4f2f7;font:14px/1.6 system-ui,sans-serif;overflow-wrap:anywhere}body{padding:clamp(12px,2.5vw,24px)}img{max-width:100%}${compactCss}${previewCss}</style></head><body>${output}</body></html>`;
 }
 function emptyDocument(message){return trustedPreviewDocument(`<p style="color:#bfb0d4">${escapeText(message)}</p>`,{id:'empty'});}
 
@@ -55,11 +59,11 @@ export function createCascadeShowcase({getCases,getScripts,getPlatform,run,onIns
   $('cascadeGabi').textContent=variant.gabi;$('cascadePacket').value=variant.input;$('cascadeCopyStatus').textContent='';
   $('cascadeFootnote').textContent=scene.notes||'Original native output; browser sandbox disables host-only interactions.';
   $('cascadeStatus').textContent='Running original native source…';
-  const executionScene={...scene,scriptNames:variant.scriptNames||scene.scriptNames,scriptContracts:variant.scriptContracts||scene.scriptContracts,requiredMatches:variant.requiredMatches||scene.requiredMatches};
+  const executionScene={...scene,scriptNames:variant.scriptNames||scene.scriptNames,scriptContracts:variant.scriptContracts||scene.scriptContracts,requiredMatches:variant.requiredMatches||scene.requiredMatches,previewHostPopoverId:variant.previewHostPopoverId||scene.previewHostPopoverId};
   $('cascadeStat').textContent=`${executionScene.scriptNames.length} source rules`;
   renderVariants(scene);steps.replaceChildren(el('p','cascade-subtle','Checking source patterns…'));
   const plan=resolveCascadePlan(getScripts(),executionScene);if(!plan.ok){frame.srcdoc=emptyDocument(plan.reason);$('cascadeStatus').textContent='Source contract changed · preview unavailable';renderSteps(scene,plan,null);return;}
-  try{const result=await run(variant.input,plan.scripts,{curatedCascade:true});if(renderToken!==generation)return;
+  try{const result=await run(variant.input,plan.scripts,{curatedCascade:true,previewHostPopoverId:executionScene.previewHostPopoverId===true});if(renderToken!==generation)return;
    const summary=describeCascadeExecution(executionScene,variant,result.log);renderSteps(scene,plan,summary);
    $('cascadeStat').textContent=`${summary.matched} matched / ${summary.considered} checked`;
    if(!summary.complete){frame.srcdoc=emptyDocument(`Required rules did not match: ${summary.missing.join(', ')}`);$('cascadeStatus').textContent='Fixture contract failed';return;}

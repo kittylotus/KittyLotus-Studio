@@ -4,14 +4,14 @@ from shutil import which
 from base64 import b64encode
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
-CSS=['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css']
+CSS=['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css','mobile-compact.css']
 MODULES=['native.js','core.js','catalog.js','skin-controls.js','workbench.js','showcase.js','showcase-ui.js','cascade.js','cascade-showcase.js','app.js']
 FILES=['data/native/lumiverse.json','data/native/sillytavern.json','data/native/janitor-reserved-agency.txt','data/native/janitor-impersonation.txt','data/fixtures/contract-fixtures.json','data/fixtures/showcase-samples.json','data/fixtures/showcase-snapshots.json','data/fixtures/cascade-samples.json']
 
 def run():
  html=(ROOT/'index.html').read_text(encoding='utf-8')
  for name in CSS:html=html.replace(f'<link href="./css/{name}" rel="stylesheet"/>','')
- html=html.replace('<script src="./js/app.js" type="module"></script>','')
+ html=html.replace('<script src="./js/app.js?v=0.16.0" type="module"></script>','')
  html=html.replace('</head>','<style>'+'\n'.join((ROOT/'css'/name).read_text(encoding='utf-8') for name in CSS)+'</style></head>')
  b64=b64encode((ROOT/'assets/gabi/gabi-views.webp').read_bytes()).decode()
  html=html.replace('src="./assets/gabi/gabi-views.webp"',f'src="data:image/webp;base64,{b64}"')
@@ -20,7 +20,7 @@ def run():
  start=app.index('function runRegexInWorker(')
  stop=app.index('async function loadNativeRegex(',start)
  app=app[:start]+'async function runRegexInWorker(input,scripts,options){return transformRegex(input,scripts,options);}\n'+app[stop:]
- sources['app.js']=app
+ sources['app.js']=app.replace('?v=0.16.0','')
  fixtures={name:(ROOT/name).read_text(encoding='utf-8') for name in FILES}
  with sync_playwright() as p:
   browser=p.chromium.launch(headless=True,executable_path=which('chromium') or which('google-chrome') or None,args=['--no-sandbox'])
@@ -55,11 +55,49 @@ def run():
   page.locator('.cascade-feature').scroll_into_view_if_needed()
   page.screenshot(path=str(ROOT.parent/'social-five.png'))
   page.locator('.cascade-card').filter(has_text='CYOA Multi').click()
-  page.wait_for_function("document.getElementById('cascadeStatus').textContent.includes('1 original regex matches')",timeout=25000)
+  page.wait_for_function("document.getElementById('cascadeStatus').textContent.includes('3 original regex matches')",timeout=25000)
   assert 'Gabrielle' in page.locator('#cascadePacket').input_value()
-  assert page.locator('#cascadeFrame').content_frame.locator('.gabi-fcm-launch').count()>=1
+  cyoa=page.locator('#cascadeFrame').content_frame
+  assert cyoa.locator('.gabi-fcm-launch').count()==1
+  assert cyoa.locator('[popovertarget="gabi-fcm-2468ace02468ace02468ace02468ace0"]').count()>=1
+  assert not cyoa.locator('.gabi-cyoa-pop').is_visible(), 'Dock must show BEFORE actor selection'
+  assert cyoa.locator('.gabi-fcm-a1').get_attribute('open') is None
   page.locator('.cascade-feature').scroll_into_view_if_needed()
-  page.screenshot(path=str(ROOT.parent/'cyoa-multi.png'))
+  page.screenshot(path=str(ROOT.parent/'cyoa-dock.png'))
+  cyoa.locator('.gabi-fcm-launch').click()
+  assert cyoa.locator('.gabi-cyoa-pop').is_visible(), 'Dock must open native actor picker'
+  assert cyoa.locator('.gabi-fcm-a1 summary').is_visible()
+  assert cyoa.locator('.gabi-fcm-a2 summary').is_visible()
+  assert not cyoa.locator('.gabi-fcm-a1').get_attribute('open'), 'Actor should start collapsed'
+  page.screenshot(path=str(ROOT.parent/'cyoa-actors.png'))
+  cyoa.locator('.gabi-fcm-a1 summary').click()
+  assert cyoa.locator('.gabi-fcm-a1').get_attribute('open') is not None
+  assert cyoa.locator('.gabi-fcm-a1 .gabi-cyoa-route').count()==3
+  for tag in ['risk','reveal','assist','tactical','protect','social']:
+   route=cyoa.locator(f'.gabi-cyoa-route[data-tag="{tag}"]')
+   assert route.count()==1,tag
+   mask=route.locator('.gabi-cyoa-icon').evaluate('(e)=>getComputedStyle(e,"::before").maskImage')
+   assert 'data:image/svg+xml' in mask,(tag,mask)
+  page.screenshot(path=str(ROOT.parent/'cyoa-full.png'))
+  cyoa.locator('.gabi-fcm-a1 summary').click()  # native Other actors = back to actor selection
+  assert not cyoa.locator('.gabi-fcm-a1').get_attribute('open')
+  cyoa.locator('.gabi-fcm-a2 summary').click()
+  assert cyoa.locator('.gabi-fcm-a2').get_attribute('open') is not None
+  assert cyoa.locator('.gabi-fcm-a2 .gabi-cyoa-route').count()==3
+  page.screenshot(path=str(ROOT.parent/'cyoa-zephyr.png'))
+  cyoa.locator('.gabi-cyoa-close').click()
+  assert not cyoa.locator('.gabi-cyoa-pop').is_visible(), 'Close must restore dock'
+  assert cyoa.locator('.gabi-fcm-launch').is_visible()
+  page.set_viewport_size({'width':390,'height':844})
+  cyoa.locator('.gabi-fcm-launch').click()
+  assert cyoa.locator('.gabi-fcm-a2').get_attribute('open') is not None  # native details state persists after popover closure
+  cyoa.locator('.gabi-fcm-a2 summary').click()  # back to actor selection
+  assert not cyoa.locator('.gabi-fcm-a2').get_attribute('open')
+  assert cyoa.locator('.gabi-fcm-a1 summary').is_visible()
+  page.screenshot(path=str(ROOT.parent/'cyoa-mobile.png'))
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2')
+  cyoa.locator('.gabi-cyoa-close').click()
+  page.set_viewport_size({'width':1440,'height':900})
   page.locator('.cascade-card').filter(has_text='Omni Tracker').click()
   page.wait_for_function("document.getElementById('cascadeStatus').textContent.includes('17 original regex matches')",timeout=25000)
   assert page.locator('#cascadeFrame').content_frame.locator('.klmt-dock').count()>=1

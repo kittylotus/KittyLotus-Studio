@@ -1,3 +1,27 @@
+## v0.16.0 · GitHub Pages release candidate (2026-11-22)
+
+- Mobile-only compact layout: 92% Studio scale at ≤700px, 90% at ≤390px. Desktop remains unchanged.
+- Mobile-only 90% native regex iframe scale in the full-presentation and sample gallery, excluding native CYOA popovers to preserve dock click geometry; source HTML is not altered.
+- Add GitHub Pages Actions deployment that runs JavaScript checks and publishes only runtime assets under the repository subpath.
+- Keep `.nojekyll`, mobile density and static resource integrity tested; preserve original native data and artwork.
+
+# KittyLotus Studio v0.15 · Interactive Native CYOA Dock
+
+- Restores the real original **dock → actor selection → individual character routes** flow in the source-verified CYOA Multi showcase; removes the v0.14 preview-only force-open modal adapter.
+- The native declarative popover, close button, and `<details>` actor navigation work without injected JavaScript. Source rules and host-only send actions are unchanged; the verified random-ID shim remains scoped to the curated CYOA fixture.
+- Changes the six sample route tag identifiers to source-supported **risk, reveal, assist, tactical, protect, social** so the CSS data-URI SVG masks render correctly, retaining the Gabrielle–Zephyr–Kitty scene decisions and descriptions.
+- Enlarges the native CYOA stage for its full actor map and branch panels, including mobile; allows its original GitHub sky artwork under the restricted image CSP (may not load offline).
+- Adds a source vocabulary regression and browser interaction checks for dock, both actors, route icon masks, map return, close, and mobile. **74/74 Node tests passed; dedicated separate-ESM Chromium browser smoke passed.**
+- Canonical Lumiverse, SillyTavern and Janitor preset sources, protected contract fixtures, original gallery snapshots and artwork were not changed. Full cumulative static-site overlay remains ready for GitHub Pages.
+
+# KittyLotus Studio v0.14 · CYOA Dependencies & Gabi Scenario Cleanup
+
+- Verifies the complete original CYOA Multi chain, **Modal → Popover ID → Popover Wiring**, instead of stopping after the Modal. Exactly fingerprints all three canonical native scripts. A single deterministic 32-digit host ID is inserted only into the CYOA popover marker in the curated sandbox between stages; unrelated regex previews and host macros are untouched. No host submissions or runtime actions are enabled.
+- Replaces legacy Mara, archivist, library-index, and generic Twitch gallery scenarios with Gabrielle, Zephyr, Kitty, and the diagnostic-bay containment scene. Updates the tracker, campaign, five social packets, and Skin Lab's Motive Ledger example without changing canonical regexes, native preset files, or protected contract fixtures.
+- Repairs one tracker fixture severity to match the native regex vocabulary, restoring the **17 original matched transformations**. Regenerates all 13 small-gallery source-derived HTML snapshots and fingerprints for their revised packets.
+- Adds dependency, opt-in macro-substitution, stale-name, and source-contract regressions. **73/73 Node tests and targeted real-ESM Chromium showcase smoke passed.** The older broad native-browser suite hung in this environment and is not counted.
+- Confirms the already-correct v0.13 tiny-gallery replacement need not be rewritten; an old gallery screenshot was caused by browser caching. Hard refresh following deployment if older assets remain visible.
+
 # KittyLotus Studio v0.13 · Scene-Driven Regex Theater
 
 - Consolidates classic Twitter, Tumblr, Instagram, Twitch, and a new full native iMessage phone-shell cascade into **one Social worlds card** with five distinct native source plans. Removes Discord from the top gallery, not the source catalog.

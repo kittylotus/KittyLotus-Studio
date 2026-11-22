@@ -21,7 +21,11 @@ test('each native platform renders the same Gabi ledger packet through its own a
     const payload = motiveLedgerPreviewInput();
     const fixture = fixtures.find(item => item.id === `motive-${platform}`);
     assert.ok(fixture, `${platform} missing regression fixture`);
-    assert.equal(fixture.input, payload, 'the fixture and live preview must not drift apart');
+    // Canonical regex-contract fixtures are protected source evidence. The Studio's
+    // newer Gabi scene is a separate preview, and both must still match the native renderer.
+    const canonical = transformRegex(fixture.input,[{...renderer,disabled:false}]);
+    assert.ok(canonical.log.some(entry=>entry.changed),`${platform} canonical contract must still match`);
+    assert.match(payload,/third fault|rollback/i,'new Gabi preview should use the provided diagnostic-bay scene');
     const result = transformRegex(payload, [{...renderer, disabled:false}]);
     assert.ok(result.log.some(entry => entry.changed), `${platform} renderer must match real contract`);
     assert.match(result.output, /<!-- MOTIVE_LEDGER_START -->/);

@@ -8,10 +8,10 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def inline_fixture():
     html=(ROOT/'index.html').read_text()
-    for filename in ['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css']:
+    for filename in ['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css','mobile-compact.css']:
         html=html.replace(f'<link href="./css/{filename}" rel="stylesheet"/>','')
-    html=html.replace('<script src="./js/app.js" type="module"></script>','')
-    styles='\n'.join((ROOT/'css'/x).read_text() for x in ['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css'])
+    html=html.replace('<script src="./js/app.js?v=0.16.0" type="module"></script>','')
+    styles='\n'.join((ROOT/'css'/x).read_text() for x in ['studio.css','constellation.css','nightshift.css','workbench.css','workshop-ux.css','skinmaker-v08.css','skinmaker-v09.css','workshop-v10.css','regex-showcase.css','cascade-showcase.css','mobile-compact.css'])
     html=html.replace('</head>',f'<style>{styles}</style></head>')
     lounge='data:image/webp;base64,'+b64encode((ROOT/'assets/gabi/gabi-views.webp').read_bytes()).decode()
     html=html.replace('src="./assets/gabi/gabi-views.webp"',f'src="{lounge}"')

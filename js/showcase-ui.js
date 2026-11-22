@@ -15,7 +15,7 @@ function browserDisplayHtml(fixture,output){
 }
 function safePreviewDocument(output,thumbnail=false){
  const inner=thumbnail?'body{padding:16px!important}':'body{padding:22px!important}';
- return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src 'none'; script-src 'none'; connect-src 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#08070b;color:#f4f2f7;font:14px/1.6 system-ui,sans-serif;overflow-wrap:anywhere}${inner}</style></head><body>${output}</body></html>`;
+ return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src 'none'; script-src 'none'; connect-src 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#08070b;color:#f4f2f7;font:14px/1.6 system-ui,sans-serif;overflow-wrap:anywhere}@media(max-width:650px){html{zoom:.90}}${inner}</style></head><body>${output}</body></html>`;
 }
 
 export function createShowcase({getScripts,getPlatform,getFixtures,getSnapshots,getSource,run,onInspect,onSelect}){

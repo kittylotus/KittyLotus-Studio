@@ -1,6 +1,26 @@
-# KittyLotus Studio v0.13 · Scene-Driven Regex Theater
+# KittyLotus Studio v0.15 · Interactive CYOA Dock & SVG Routes
 
 KittyLotus Studio is a browser-local, no-build narrative preset workbench. It runs as static HTML/CSS/JavaScript and can be published to GitHub Pages. The provided Lumiverse, SillyTavern and Janitor sources are bundled in `data/native/`, with no cloud account or automatic upload.
+
+## v0.15 · Dock → actors → routes, in the original renderer
+
+The CYOA Multi demonstration now starts at the **original native decision dock**, not a forced-open modal. Clicking the dock opens the original popover's **actor-selection map**. Selecting Gabrielle or Zephyr opens that character's three route choices; the native **Other actors** control goes back to the selection map, and Close dismisses the popover. All of these steps use the browser's declarative `popover` and `<details>` behavior with scripts disabled. Reopening remembers which actor was expanded most recently; use **Other actors** to return to the map.
+
+The bundled scene now uses the native CYOA route tags `risk`, `reveal`, `assist`, `tactical`, `protect`, and `social`, so the **actual source-defined SVG icon masks and accent colors** appear instead of empty fallback squares. The choice descriptions and the six Gabi/Zephyr scene actions are retained. The browser showcase still runs the same three original source regexes, pinned to their exact fingerprints, and only replaces the 32-digit generated popover ID. No original regex, canonical native JSON, or route submission behavior was modified. Host route commands remain disabled in the sandbox.
+
+The preview has additional height for the native actor map and full branch screen, including responsive mobile sizing. The native CYOA sky art keeps its original GitHub image URL: the sandbox permits that **image only** alongside weather images, but it will be absent if the image host is unavailable. No scripts or network requests are enabled by the preview.
+
+**Verification:** 74 Node tests passed. Chromium with separately loaded ES modules exercised dock opening, both actor screens, the return-to-selection control, all six SVG route masks, closing, and responsive mobile presentation. The site is still static and GitHub Pages compatible. Deploy the full overlay at your site's repository root and hard-refresh after the release to avoid old cached modules.
+
+## v0.14 · Verified three-stage CYOA and scene fixtures
+
+This is a focused follow-up, not a gallery redesign. The smaller curated gallery already changed in v0.13; if it still looks like the old tracker/social gallery, your browser is serving cached site files. Hard-refresh after deploying this full cumulative overlay.
+
+**CYOA Multi now traces all three original native rules**: Modal, Popover ID, and Popover Wiring. The fixed preview performs a *strictly scoped* replacement of Lumiverse's 32-character random-ID host macro in the generated CYOA marker between the second and third regex. That enables the real popover wiring to match in a browser-only preview; no arbitrary macros or host actions are executed. The preview still opens the native chooser statically for inspection. Both the 32-character ID and every native regex are source verified.
+
+The complete tracker fixture, campaign examples, social presentations (including Twitch), and Skin Lab's demo Motive Ledger now use Gabi, Zephyr, Kitty, and the diagnostic-bay/corridor-containment scene instead of Mara/archivist placeholders. The original protected contract fixtures remain unchanged and are verified separately. One tracker severity was restored to a value the actual regex accepts, returning the full demonstration to **17 matching rules**. All 13 small-gallery HTML snapshots were regenerated against the native scripts after updating the user-facing prose. No canonical preset, script, or artwork was modified.
+
+`npm test`: **73 passing tests**. Dedicated real-ESM Chromium gallery verification passed for the wired three-stage CYOA, five social variants, tracker, small-gallery samples and responsive layout. An older broad browser smoke hung in the sandbox and is not reported as a pass.
 
 ## v0.13 · A scene through the rendering pipeline
 
@@ -10,7 +30,7 @@ The redundant **Live Render / original replacement HTML** title and description 
 
 The lower curated gallery focuses on the supplied **Gabrielle, Kitty, and Zephyr bridge-containment scene** rather than duplicating the full tracker or socials. The Lumiverse examples now include eight inline text effects in one scene excerpt, four original clickable marginal notes, POV change, a thought cutaway, event+chaos, Gabrielle's muttering box, periodic commentary, and narrative telemetry. The existing slowburn and chapter visual samples remain. Three non-social SillyTavern visual samples also remain. All original regexes, including the full 220 Lumiverse/22 ST catalogs, are still editable in the advanced inspector.
 
-Two Gabi display fixtures have Lumiverse host-variable gating macros that do not execute in a standalone browser. **Only their browser preview** isolates the already-generated UI island so the author can see the result; the source regex, native JSON, fixture packets, and snapshot outputs are not rewritten. The standalone CYOA preview similarly reveals the original popover statically. Scripts and host-only actions remain disabled in the sandbox. The single-regex sample picker now jumps without a long smooth-scroll animation.
+Two Gabi display fixtures have Lumiverse host-variable gating macros that do not execute in a standalone browser. **Only their browser preview** isolates the already-generated UI island so the author can see the result; the source regex, native JSON, fixture packets, and snapshot outputs are not rewritten. The standalone CYOA preview now keeps its original dock and interactive declarative popover, while host submission remains disabled. Scripts and host-only actions remain disabled in the sandbox. The single-regex sample picker now jumps without a long smooth-scroll animation.
 
 Run `npm test` for source checks, and `python tests/v13_showcase_browser_smoke.py` for the real separated-ESM Chromium gallery test (requires Python Playwright and Chromium). The older `tests/showcase_browser_smoke.py` command now invokes the same updated test.
 
@@ -68,3 +88,19 @@ Showcase thumbnails, full tracker cascades and weather/campaign/website presenta
 ### ESM browser regression (no localhost server required)
 
 Run `python tests/esm_browser_smoke.py` after changing module imports or SillyTavern grouping. This test creates separate native ES modules in Chromium instead of merging their scopes, preventing missing-import regressions.
+
+
+## v0.16: GitHub Pages launch and mobile density
+
+For mobile screens under 700 CSS pixels the Studio is displayed at 92% scale, and at 390px and below at 90%. Source-generated gallery and cascade HTML previews get a separate 90% mobile-only visual scale, **except CYOA**, whose native popover requires unscaled iframe hit testing. These are presentation-only adjustments: regex output, input packets, native preset exports, and desktop CSS remain unchanged. No viewport meta spoofing, and no JavaScript-based scaling of controls.
+
+This release includes a ready-made **GitHub Actions Pages workflow** in `.github/workflows/pages.yml`:
+
+1. Unzip the **contents of `KittyLotus-Studio/`** at the ROOT of the GitHub repository. `index.html` should be beside `.github/`, `css/`, `js/`, `assets/`, and `data/`, not nested in another folder.
+2. In GitHub Desktop, **Add an Existing Repository** if this is already a git checkout, or **File → New repository** pointed at the extracted folder. Commit the files and use **Publish repository** / **Push origin** on the `main` branch. If GitHub Desktop creates another root folder, copy the site's contents inside that repository before committing.
+3. On GitHub, open **Settings → Pages → Build and deployment → Source: GitHub Actions**. The included workflow checks the JavaScript test suite, stages only public site files, then publishes them on pushes to `main` (or through **Run workflow**).
+4. Check the **Actions** tab for the Pages deployment. Open the `github-pages` environment URL shown on the completed run. This works under `https://USERNAME.github.io/REPOSITORY/` because every shipped site asset is relative to the current path.
+
+The deployed artifact includes `index.html`, `.nojekyll`, `css/`, `js/`, `assets/`, and `data/`. It excludes tests, scripts, release manifests, and changelogs. All bundled native presets, fixture content, and Gabi images in the `data/` and `assets/` folders **will be publicly accessible** on a public Pages site. Review those assets before publishing. Edits made in a visitor's browser do not automatically commit back to GitHub; users should export their modified presets locally.
+
+To preflight a deployment without GitHub: `npm test` followed by `node scripts/stage-pages.mjs`. The generated `dist-pages/` directory is ignored by git.

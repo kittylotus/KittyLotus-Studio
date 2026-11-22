@@ -175,7 +175,13 @@ export function importIndividualDossierSkin(source,portable){
  return id;
 }
 /** Preview uses actual unified-shell source, not a handwritten reconstruction. */
-export function trackerPreviewInput(){return `<!-- KL_MULTI_TRACKER_START -->\n<klmt id="mt12345678">\n<modules>state|aux|motive|psyche|scene|inspect|social|knowledge</modules>\n<mt:state><time>18:42 · Rain</time><place>City Library</place><mode>Quiet suspicion</mode><present>Gabrielle, Mara</present><goal>Find the missing letter</goal><change>A familiar clue resurfaces</change></mt:state>\n<mt:aux><threads>Unopened letter</threads><inventory>Silver key</inventory></mt:aux>\n</klmt>\n<!-- KL_MULTI_TRACKER_END -->`}
+export function trackerPreviewInput(){return `<!-- KL_MULTI_TRACKER_START -->
+<klmt id="mt12345678">
+<modules>state|aux|motive|psyche|scene|inspect|social|knowledge</modules>
+<mt:state><time>03:14 · emergency</time><place>Diagnostic bay, local bridge</place><mode>Containment</mode><present>Gabrielle, Zephyr, Kitty</present><goal>Isolate the rollback before the residential locks fail</goal><change>A live conduit sparked and the corridor lights turned crimson</change></mt:state>
+<mt:aux><threads>Third fault found in facility routing</threads><inventory>Stolen magnetic security keycard</inventory></mt:aux>
+</klmt>
+<!-- KL_MULTI_TRACKER_END -->`}
 export function trackerPreviewScripts(source,skinId){
  const all=getActualRegexScripts(source);
  const shell=all.find(s=>s.scriptName.includes('Unified shell and selector'));
@@ -198,11 +204,11 @@ export function motiveLedgerRenderer(source){
 }
 export function motiveLedgerPreviewInput(){
  const values={
-  id:'m24681012',drive:'Gabrielle wants to get the narrative engine responding instead of recapping.',
-  pressure:'A missing library index and an inconvenient deadline.',
-  short_1:'Find the index key',short_1_state:'active',short_2:'Keep Kitty out of a recap loop',short_2_state:'at risk',short_3:'Inspect the archive terminal',short_3_state:'pending',
-  long_1:'Identify who rewrote the library log',long_1_state:'active',long_2:'Keep the workshop accessible',long_2_state:'pending',long_3:'Get everyone home before dawn',long_3_state:'uncertain',
-  thoughts:'Gabi: The interface is innocent. It is the payload that is being dramatic.',trace_1:'The library clock just skipped three minutes.',trace_2:'The terminal logged a second visitor.',trace_3:'Kitty found the index entry under a false title.'
+  id:'m24681012',drive:'Gabrielle wants his terminal back before the rollback reaches residential locks.',
+  pressure:'A current-clamped wrist, a missing security keycard, and emergency crimson lighting.',
+  short_1:'Isolate the third fault',short_1_state:'active',short_2:'Tell Zephyr about the keycard',short_2_state:'at risk',short_3:'Reach the clean diagnostic terminal',short_3_state:'pending',
+  long_1:'Keep the residential lifts online',long_1_state:'active',long_2:'Protect Kitty’s sandbox',long_2_state:'pending',long_3:'Get everyone home before dawn',long_3_state:'uncertain',
+  thoughts:'Gabi: I was ten lines from isolating the leak before the conduit expressed an opinion.',trace_1:'White sparks jumped from the manual bridge.',trace_2:'The right optic ghosted hexadecimal under the alarm.',trace_3:'Kitty found the third fault rewriting the corridor lighting schedule.'
  };
  return `<details><summary>✦ writing ledger...</summary>\n[Motive Ledger] {${Object.entries(values).map(([key,value])=>`"${key}":"${value}"`).join(',')}} [/Motive Ledger]\n</details>`;
 }

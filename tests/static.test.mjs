@@ -34,7 +34,7 @@ test('every local ES module named import has a matching exported binding',()=>{
  for(const sourceName of ['app.js','native.js','core.js']){
   const source=readFileSync(resolve(ROOT,'js',sourceName),'utf8');
   for(const match of source.matchAll(/import\s*\{([^}]+)\}\s*from\s*['"](\.\/[^'"]+)['"]/g)){
-   const imported=readFileSync(resolve(ROOT,'js',match[2]),'utf8');
+   const imported=readFileSync(resolve(ROOT,'js',match[2].split('?')[0]),'utf8');
    for(const raw of match[1].split(',')){
     const name=raw.trim().split(/\s+as\s+/)[0];
     if(!name)continue;
