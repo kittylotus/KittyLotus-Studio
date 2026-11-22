@@ -21,5 +21,5 @@ for(const match of html.matchAll(/(?:src|href)=["'](\.\/[^"']+)["']/g)){
 if(out===root||!out.startsWith(root+sep))throw Error('Unsafe staging target');
 rmSync(out,{recursive:true,force:true});mkdirSync(out,{recursive:true});
 for(const name of required)cpSync(join(root,name),join(out,name),{recursive:true});
-writeFileSync(join(out,'site-release.txt'),'KittyLotus Studio v0.17.0\n');
+writeFileSync(join(out,'site-release.txt'),'KittyLotus Studio v0.17.1\n');
 console.log('GitHub Pages stage verified: index.html + css/js/data/assets + .nojekyll');

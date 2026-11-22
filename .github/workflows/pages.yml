@@ -5,21 +5,17 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
+# Queue Pages releases instead of canceling in-flight uploads/deployments.
 concurrency:
   group: github-pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  publish:
+  build:
+    name: Test and package site
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -34,9 +30,52 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: dist-pages
+
+  deploy:
+    name: Publish site
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # GitHub can finish uploading the artifact before its metadata is visible.
+      # Verify exactly one artifact before calling deploy-pages; never re-upload on retry.
+      - name: Wait for Pages artifact to become visible
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          for attempt in {1..20}; do
+            if count=$(gh api "repos/${GH_REPO}/actions/runs/${RUN_ID}/artifacts?per_page=100" --jq '[.artifacts[] | select(.name == "github-pages" and (.expired | not))] | length'); then
+              if [[ "$count" == "1" ]]; then
+                echo 'One github-pages artifact is visible; deployment can proceed.'
+                # Give the artifact service a moment to index the same upload.
+                sleep 3
+                exit 0
+              fi
+              if [[ "$count" != "0" ]]; then
+                echo "Expected one github-pages artifact, got ${count}; refusing ambiguous deployment." >&2
+                exit 1
+              fi
+            else
+              echo "Artifact API query failed on attempt ${attempt}; retrying."
+            fi
+            echo "Artifact not yet indexed (attempt ${attempt}/20)."
+            sleep 5
+          done
+          echo 'GitHub did not expose the uploaded Pages artifact; no deployment attempted.' >&2
+          exit 1
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

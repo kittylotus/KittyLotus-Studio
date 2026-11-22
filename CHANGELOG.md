@@ -1,3 +1,11 @@
+## v0.17.1 · GitHub Pages artifact visibility hotfix (2026-11-22)
+
+- Split the Pages workflow into a `build` job (tests, staging, upload) and a dependent `deploy` job, so deployment never races the upload step on the same runner.
+- Wait for exactly one visible `github-pages` artifact through the GitHub Actions API before deployment; the deploy job has explicit `actions: read` permission. If artifact indexing stalls, the workflow fails clearly without re-uploading.
+- Queue concurrent Pages releases instead of cancelling an in-flight upload; use the current Pages artifact uploader v4.
+- No application JavaScript, CSS, HTML, native presets, fixtures or Gabi artwork changed. This is a deployment-only hotfix.
+- To retry the previous failed upload, **push this new workflow commit** or use **Actions → Publish KittyLotus Studio → Run workflow**, not “Re-run all jobs” on the old run (which can duplicate `github-pages` artifacts).
+
 ## v0.17.0 · Native skin names + one-surface mobile editor (2026-11-22)
 
 - Overview eyebrow now reads **The screen's control panel**, with **Prep the scene, Teammate.** as the main heading, without gradient-highlighted typography.

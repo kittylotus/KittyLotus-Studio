@@ -25,8 +25,15 @@ test('mobile density applies only at phone breakpoints with no desktop global zo
 });
 test('deployment runs tests and stages public site only',()=>{
  const action=get('.github/workflows/pages.yml');
- for(const token of ['npm test','node scripts/stage-pages.mjs','actions/upload-pages-artifact@v3','actions/deploy-pages@v4'])
+ for(const token of ['npm test','node scripts/stage-pages.mjs','actions/upload-pages-artifact@v4','actions/deploy-pages@v4'])
   assert.ok(action.includes(token),token);
+ assert.match(action,/jobs:\s*\n\s*build:/);
+ assert.match(action,/\n  deploy:\s*\n[\s\S]*?needs: build/);
+ assert.match(action,/Wait for Pages artifact to become visible/);
+ assert.match(action,/actions: read/);
+ assert.match(action,/cancel-in-progress: false/);
+ assert.match(action,/count=\$\(gh api/);
+ assert.equal((action.match(/uses: actions\/upload-pages-artifact@/g)||[]).length,1);
  const staging=get('scripts/stage-pages.mjs');
  assert.match(staging,/const required=\['index\.html','\.nojekyll','css','js','data','assets'\]/);
  assert.ok(!staging.includes("cpSync(join(root,'tests')"));

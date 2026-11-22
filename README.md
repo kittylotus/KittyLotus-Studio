@@ -69,6 +69,10 @@ Run these commands inside the `KittyLotus-Studio` folder so the site's relative 
 
 Keep `index.html` at the repository root alongside `css/`, `js/`, `data/`, `assets/` and `.nojekyll`. Publish `main` / root from GitHub Pages settings. The site uses only relative paths for its shipped assets; no bundler or app server is needed for deployment.
 
+### Deployment artifact troubleshooting (v0.17.1)
+
+A failed deploy can report **`Found 0 artifact(s)`** despite the Actions run visibly listing a completed `github-pages` upload. That is a GitHub artifact-indexing/metadata visibility failure, not proof the website files are missing. The workflow now builds/uploads in one job and deploys in a dependent job after confirming exactly one artifact has become visible. If an older run failed in this way, push a new commit or trigger **Run workflow** to obtain a fresh run. Avoid **Re-run all jobs** on an old run because it can create duplicate artifacts under the same run ID. If the new workflow still fails, inspect the `Wait for Pages artifact to become visible` step to distinguish API visibility from a subsequent Pages deployment error.
+
 ### Tests
 
 ```sh
